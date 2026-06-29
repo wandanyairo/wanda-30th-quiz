@@ -85,18 +85,20 @@ export const QUESTIONS = [
     type: 'choice',
     emoji: '🥦',
     text: 'Which of these veggies typically on a charcuterie board does Wanda hate?',
-    options: ['Olives', 'Cucumber', 'Baby carrots', 'Cherry Tomatoes'],
+    options: ['Olives', 'Cucumbers', 'Baby carrots', 'Cherry Tomatoes'],
   },
   {
     id: 'advice',
     type: 'text',
     emoji: '🎂',
-    text: "If you're older than 30, what is one piece of advice you'd give to your younger self (or me) at 30? If you're younger than 30, what do you hope that age will bring you when it's your turn?",
+    text: "If you're older than 30, what is one piece of advice you'd give to your younger self (or me) at 30?",
+    subtext: "If you're younger than 30, what do you hope that age will bring you when it's your turn?",
   },
   {
     id: 'wishes',
     type: 'text',
     emoji: '🥂',
     text: 'Wishes for Wanda—what is your wish for Wanda in this new decade?',
+    hint: "Be as specific as possible please so that the universe doesn't have room for misinterpretation lol",
   },
 ]

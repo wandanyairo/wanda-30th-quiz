@@ -28,10 +28,15 @@ export default function QuizScreen({
       <div className="quiz-inner">
         <p className="quiz-progress-label">{currentIndex + 1} of {total}</p>
 
-        <h2 className="quiz-question">
-          {question.emoji && <span className="quiz-emoji">{question.emoji} </span>}
-          {question.text}
-        </h2>
+        <div className="quiz-question-block">
+          <h2 className="quiz-question">
+            {question.emoji && <span className="quiz-emoji">{question.emoji} </span>}
+            {question.text}
+          </h2>
+          {question.subtext && (
+            <p className="quiz-subtext">{question.subtext}</p>
+          )}
+        </div>
 
         {question.hint === 'scammers' && <ScammerHint />}
         {question.hint && question.hint !== 'scammers' && (
@@ -90,7 +95,7 @@ export default function QuizScreen({
 
         <div className="quiz-nav">
           <button className="btn-next" onClick={onNext} disabled={!hasAnswer}>
-            {isLast ? 'Finish' : 'Next →'}
+            {isLast ? 'Submit' : 'Next →'}
           </button>
           <button className="btn-back" onClick={onBack} disabled={currentIndex === 0}>
             ← Back

@@ -12,20 +12,8 @@ export default function OutroScreen() {
     const colors = ['#D4763B', '#8b2e2e', '#f5c97a', '#FBF6EE', '#c94f7c']
 
     ;(function frame() {
-      confetti({
-        particleCount: 6,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 },
-        colors,
-      })
-      confetti({
-        particleCount: 6,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 },
-        colors,
-      })
+      confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 }, colors })
+      confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 }, colors })
       if (Date.now() < end) requestAnimationFrame(frame)
     })()
   }, [])
@@ -36,9 +24,26 @@ export default function OutroScreen() {
         {/* Replace with <img> when you have the image ready */}
         <span className="welcome-image-emoji">🥂</span>
       </div>
+
       <div className="outro-text">
-        <h1>Cheers, Wanda! 🥂</h1>
-        <p>Your answers have been submitted. See you on July 10!</p>
+        <h1>Your answers have been submitted! Thank you for participating and for repping your city 🌍</h1>
+
+        <ul className="outro-list">
+          <li>Reminder: this was fully anonymous. Nothing here was tied to your name</li>
+          <li>You can return to this link anytime to see the questions and your answers</li>
+          <li>
+            Answers will be revealed on July 10 at the party (for those attending)
+            and remotely via a Partiful Card (for those not attending)
+          </li>
+        </ul>
+
+        <p className="outro-promo">
+          To get into the spirit of Wanda's Worldwide Wine Tours season, check out:{' '}
+          <em>Wine Crime</em> on the Scamfluencers podcast (Apple Podcasts).
+          More wine and crime to come 😈
+        </p>
+
+        <p className="outro-sign-off">Happy Wanda's Worldwide Wine Tours™!</p>
       </div>
     </div>
   )

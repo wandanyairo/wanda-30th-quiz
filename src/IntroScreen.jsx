@@ -2,11 +2,7 @@ export default function IntroScreen({ onStart, onBack }) {
   return (
     <div className="intro">
       <header className="intro-header">
-        <h1>
-          Wanda's Worldwide Wine Tours™
-          <span className="title-divider"> ~ </span>
-          The Quiz
-        </h1>
+        <h1>Things to Know</h1>
         <hr className="intro-divider" />
       </header>
 

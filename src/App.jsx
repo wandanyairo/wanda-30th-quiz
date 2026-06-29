@@ -17,8 +17,12 @@ export default function App() {
   const hasAnswer = (() => {
     if (Array.isArray(currentAnswer)) return currentAnswer.length > 0
     if (currentAnswer && typeof currentAnswer === 'object') {
-      // wine-search: need wine selected; choice-explain: need choice selected
-      return !!currentAnswer.choice?.trim() || !!currentAnswer.wine?.trim()
+      if (question?.type === 'choice-explain') {
+        return !!currentAnswer.choice?.trim() && !!currentAnswer.why?.trim()
+      }
+      if (question?.type === 'wine-search') {
+        return !!currentAnswer.wine?.trim() && !!currentAnswer.why?.trim()
+      }
     }
     return currentAnswer.toString().trim() !== ''
   })()

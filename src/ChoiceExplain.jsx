@@ -1,11 +1,9 @@
-import { useState } from 'react'
-
 export default function ChoiceExplain({ options, value, onChange }) {
   const choice = value?.choice || ''
   const why = value?.why || ''
 
   function handleChoice(opt) {
-    onChange({ choice: opt, why })
+    onChange({ choice: opt, why: choice === opt ? why : '' })
   }
 
   function handleWhy(e) {
@@ -14,27 +12,26 @@ export default function ChoiceExplain({ options, value, onChange }) {
 
   return (
     <div className="choice-explain">
-      <div className="quiz-choices">
-        {options.map(opt => (
+      {options.map(opt => (
+        <div key={opt} className="choice-explain-option">
           <button
-            key={opt}
             className={`quiz-choice-btn${choice === opt ? ' selected' : ''}`}
             onClick={() => handleChoice(opt)}
           >
             {opt}
           </button>
-        ))}
-      </div>
-      {choice && (
-        <textarea
-          className="quiz-textarea"
-          placeholder="Tell us why…"
-          value={why}
-          onChange={handleWhy}
-          rows={4}
-          autoFocus
-        />
-      )}
+          {choice === opt && (
+            <textarea
+              className="quiz-textarea choice-explain-textarea"
+              placeholder="Tell us why…"
+              value={why}
+              onChange={handleWhy}
+              rows={4}
+              autoFocus
+            />
+          )}
+        </div>
+      ))}
     </div>
   )
 }
