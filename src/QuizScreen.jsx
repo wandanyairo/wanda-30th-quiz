@@ -1,3 +1,5 @@
+import RankQuestion from './RankQuestion.jsx'
+
 export default function QuizScreen({
   question,
   answer,
@@ -21,15 +23,22 @@ export default function QuizScreen({
       <div className="quiz-inner">
         <p className="quiz-progress-label">{currentIndex + 1} of {total}</p>
 
-        <h2 className="quiz-question">{question.text}</h2>
+        <h2 className="quiz-question">
+          {question.emoji && <span className="quiz-emoji">{question.emoji} </span>}
+          {question.text}
+        </h2>
+
+        {question.hint && (
+          <p className="quiz-hint">{question.hint}</p>
+        )}
 
         {question.type === 'text' && (
-          <input
-            className="quiz-text-input"
-            type="text"
+          <textarea
+            className="quiz-textarea"
             placeholder="Type your answer…"
             value={answer}
             onChange={e => onAnswer(e.target.value)}
+            rows={4}
             autoFocus
           />
         )}
@@ -46,6 +55,14 @@ export default function QuizScreen({
               </button>
             ))}
           </div>
+        )}
+
+        {question.type === 'rank' && (
+          <RankQuestion
+            options={question.options}
+            value={answer || []}
+            onChange={onAnswer}
+          />
         )}
 
         <button
