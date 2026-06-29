@@ -7,7 +7,7 @@ export const QUESTIONS = [
   {
     id: 'attendance',
     type: 'choice',
-    text: 'Will you be celebrating at the soirée in NYC, or joining the fun from afar?',
+    text: 'Will you be celebrating at the soirée in NYC or joining the fun from afar?',
     options: ['In-person', 'Remote'],
   },
   {
@@ -42,7 +42,7 @@ export const QUESTIONS = [
     id: 'rank-wines',
     type: 'rank',
     emoji: '🍷',
-    text: "Rank Wanda's Fave Wines",
+    text: "Rank Wanda's fave wines",
     hint: 'Drag to reorder — #1 is most favourite',
     options: [
       { id: 'chilled-malbec',label: 'Chilled Malbec' },
@@ -63,7 +63,7 @@ export const QUESTIONS = [
     id: 'rank-cheeses',
     type: 'rank',
     emoji: '🧀',
-    text: "Rank Wanda's Fave Cheeses",
+    text: "Rank Wanda's fave cheeses",
     hint: 'Drag to reorder — #1 is most favourite',
     options: [
       { id: 'brie',      label: 'Brie' },
@@ -91,14 +91,14 @@ export const QUESTIONS = [
     id: 'advice',
     type: 'text',
     emoji: '🎂',
-    text: "If you're older than 30, what is one piece of advice you'd give to your younger self (or me) at 30?",
+    text: "If you're older than 30, what is one piece of advice you'd give to your younger self (or Wanda) at 30?",
     subtext: "If you're younger than 30, what do you hope that age will bring you when it's your turn?",
   },
   {
     id: 'wishes',
     type: 'text',
     emoji: '🥂',
-    text: 'Wishes for Wanda: What is your wish for Wanda in this new decade?',
+    text: 'Wishes for Wanda: what is your wish for the birthday girl in her new decade?',
     hint: "Be as specific as possible please—let's not leave the universe room for misinterpretation!",
   },
 ]
