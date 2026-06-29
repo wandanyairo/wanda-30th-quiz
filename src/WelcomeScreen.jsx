@@ -15,7 +15,7 @@ export default function WelcomeScreen({ onNext }) {
       <div className="welcome-text">
         <p>
           Since we can't bring Wanda around the world for a wine tour, we are
-          bringing the world to Wanda—wine and charcuterie themed of course 🍷🍇🧀
+          bringing the world and the wine to Wanda 🍷🍇🧀
         </p>
         <button className="btn-start" onClick={onNext}>Let's Go →</button>
       </div>

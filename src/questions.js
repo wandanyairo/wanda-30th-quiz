@@ -7,7 +7,7 @@ export const QUESTIONS = [
   {
     id: 'attendance',
     type: 'choice',
-    text: 'Will you be celebrating with us in person in NYC, or joining the fun from afar?',
+    text: 'Will you be celebrating with me in person in NYC, or joining the fun from afar?',
     options: ['In-person', 'Remote'],
   },
   {
@@ -85,7 +85,7 @@ export const QUESTIONS = [
     type: 'choice',
     emoji: '🥦',
     text: 'Which of these veggies typically on a charcuterie board does Wanda hate?',
-    options: ['Baby carrots', 'Cherry Tomatoes', 'Cucumbers', 'Olives'],
+    options: ['Baby carrots', 'Cherry tomatoes', 'Cucumbers', 'Olives'],
   },
   {
     id: 'advice',
@@ -98,7 +98,7 @@ export const QUESTIONS = [
     id: 'wishes',
     type: 'text',
     emoji: '🥂',
-    text: 'Wishes for Wanda—what is your wish for Wanda in this new decade?',
-    hint: "Be as specific as possible please so that the universe doesn't have room for misinterpretation lol",
+    text: 'Wishes for Wanda: What is your wish for Wanda in this new decade?',
+    hint: "Be as specific as possible please—let's not leave the universe room for misinterpretation!",
   },
 ]

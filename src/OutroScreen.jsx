@@ -40,8 +40,15 @@ export default function OutroScreen() {
 
         <p className="outro-promo">
           To get into the spirit of the season, check out:{' '}
-          <em>Wine Crime</em> on the Scamfluencers podcast (Apple Podcasts).
-          More wine and crime to come 😈
+          <a
+            href="https://podcasts.apple.com/us/podcast/encore-wine-crime/id1616682405?i=1000648537961"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="outro-link"
+          >
+            Wine Crime
+          </a>
+          {' '}on the Scamfluencers podcast. More wine and crime to come 😈
         </p>
 
         <p className="outro-sign-off">Happy Wanda's Worldwide Wine Tours™!</p>

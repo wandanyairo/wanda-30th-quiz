@@ -23,7 +23,7 @@ export default function ChoiceExplain({ options, value, onChange }) {
           {choice === opt && (
             <textarea
               className="quiz-textarea choice-explain-textarea"
-              placeholder="Why?"
+              placeholder="Because..."
               value={why}
               onChange={handleWhy}
               rows={4}

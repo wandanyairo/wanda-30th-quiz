@@ -120,6 +120,16 @@ body {
   text-align: center;
 }
 
+.outro-link {
+  color: #D4763B;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.outro-link:hover {
+  color: #bf6530;
+}
+
 /* ── Intro Screen ── */
 
 .intro {

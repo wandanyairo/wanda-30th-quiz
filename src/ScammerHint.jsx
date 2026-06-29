@@ -1,16 +1,16 @@
 import { useState } from 'react'
 
 const SCAMMERS = [
-  { name: 'Anna Delvey', desc: 'No explanation needed', url: 'https://en.wikipedia.org/wiki/Anna_Delvey' },
-  { name: 'Doris Payne', desc: 'Jewelry Heist Queen', url: 'https://en.wikipedia.org/wiki/Doris_Payne' },
-  { name: 'Imelda Marcos', desc: 'Politics', url: 'https://en.wikipedia.org/wiki/Imelda_Marcos' },
-  { name: 'Jho Low', desc: 'Sovereign Funds', url: 'https://en.wikipedia.org/wiki/Jho_Low' },
-  { name: 'Nirav Modi', desc: 'Jewelry Innovator', url: 'https://en.wikipedia.org/wiki/Nirav_Modi' },
-  { name: 'Razzlekhan', desc: 'Crypto', url: 'https://en.wikipedia.org/wiki/Heather_Morgan' },
-  { name: 'Richard Vallières', desc: 'Maple Syrup', url: 'https://en.wikipedia.org/wiki/2012_Quebec_maple_syrup_heist' },
-  { name: 'Rita Crundwell', desc: 'Comptroller Horse Lady', url: 'https://en.wikipedia.org/wiki/Rita_Crundwell' },
-  { name: 'Rudy Kurniawan', desc: 'Wine!', url: 'https://en.wikipedia.org/wiki/Rudy_Kurniawan' },
-  { name: 'Shaman Durek Verrett', desc: 'Romance etc.', url: 'https://en.wikipedia.org/wiki/Durek_Verrett' },
+  { name: 'Anna Delvey', desc: 'No explanation needed', url: 'https://www.google.com/search?gs_ssp=eJzj4tVP1zc0TCsorspItqwyYPQSTszLS1RISc0pS61UyEstScvJrAAA2JwMbw&q=anna+delvey+netflix&oq=anna+delvy+&gs_lcrp=EgZjaHJvbWUqEAgBEC4YkQIYsQMYgAQYigUyBggAEEUYOTIQCAEQLhiRAhixAxiABBiKBTINCAIQABiRAhiABBiKBTINCAMQABiRAhiABBiKBTINCAQQABiRAhiABBiKBTILCAUQABgKGAsYgAQyCwgGEC4YChgLGIAEMg4IBxAAGAoYCxixAxiABDILCAgQABgKGAsYgATSAQg0MjU0ajBqOagCBrACAfEFItdepfSJ1kc&sourceid=chrome&ie=UTF-8' },
+  { name: 'Doris Payne', desc: 'Jewelry Heist Queen', url: 'https://www.primevideo.com/detail/0R7AH8YV0Q6A2B0R126XHYM8EP' },
+  { name: 'Imelda Marcos', desc: 'Politics', url: 'https://www.primevideo.com/detail/0J8SWJH5130NQNS2EBJBCVDZII/ref=atv_sr_fle_c_sr62ef6f_1_1_1?sr=1-1&pageTypeIdSource=ASIN&pageTypeId=B0GX14DZ6Y&qid=1782705302708' },
+  { name: 'Jho Low', desc: 'Sovereign Funds', url: 'https://www.netflix.com/title/81735368' },
+  { name: 'Nirav Modi', desc: 'Jewelry Innovator', url: 'https://www.netflix.com/title/80990073' },
+  { name: 'Razzlekhan', desc: 'Crypto', url: 'https://www.netflix.com/title/81600031' },
+  { name: 'Richard Vallières', desc: 'Maple Syrup', url: 'https://podcasts.apple.com/au/podcast/the-great-syrup-swindle/id1616682405?i=1000628872476' },
+  { name: 'Rita Crundwell', desc: 'Comptroller Horse Lady', url: 'https://www.amazon.com/All-Queens-Horses-Gene-Biggerstaff/dp/B07BPNGP85' },
+  { name: 'Rudy Kurniawan', desc: 'Wine!', url: 'https://podcasts.apple.com/us/podcast/encore-wine-crime/id1616682405?i=1000648537961' },
+  { name: 'Shaman Durek Verrett', desc: 'Romance etc.', url: 'https://www.netflix.com/title/81763742' },
 ]
 
 export default function ScammerHint() {

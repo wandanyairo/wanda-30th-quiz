@@ -77,7 +77,7 @@ export default function WineSearch({ value, onChange }) {
       {wineChoice.trim() && (
         <textarea
           className="quiz-textarea"
-          placeholder="Why?"
+          placeholder="Because..."
           value={why}
           onChange={handleWhyChange}
           rows={3}
