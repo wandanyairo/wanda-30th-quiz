@@ -1,7 +1,7 @@
 export const QUESTIONS = [
   {
     id: 'city',
-    type: 'text',
+    type: 'city',
     text: 'What city are you in?',
   },
   {

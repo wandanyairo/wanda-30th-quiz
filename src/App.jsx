@@ -16,6 +16,10 @@ export default function App() {
     ? currentAnswer.length > 0
     : currentAnswer.toString().trim() !== ''
 
+  function handleBack() {
+    if (currentIndex > 0) setCurrentIndex(i => i - 1)
+  }
+
   function handleStart() {
     setScreen('quiz')
   }
@@ -57,6 +61,7 @@ export default function App() {
       answer={currentAnswer}
       onAnswer={handleAnswer}
       onNext={handleNext}
+      onBack={handleBack}
       currentIndex={currentIndex}
       total={total}
       hasAnswer={hasAnswer}

@@ -1,10 +1,12 @@
 import RankQuestion from './RankQuestion.jsx'
+import CitySearch from './CitySearch.jsx'
 
 export default function QuizScreen({
   question,
   answer,
   onAnswer,
   onNext,
+  onBack,
   currentIndex,
   total,
   hasAnswer,
@@ -30,6 +32,10 @@ export default function QuizScreen({
 
         {question.hint && (
           <p className="quiz-hint">{question.hint}</p>
+        )}
+
+        {question.type === 'city' && (
+          <CitySearch value={answer} onChange={onAnswer} />
         )}
 
         {question.type === 'text' && (
@@ -65,13 +71,18 @@ export default function QuizScreen({
           />
         )}
 
-        <button
-          className="btn-next"
-          onClick={onNext}
-          disabled={!hasAnswer}
-        >
-          {isLast ? 'Finish' : 'Next →'}
-        </button>
+        <div className="quiz-nav">
+          {currentIndex > 0 && (
+            <button className="btn-back" onClick={onBack}>← Back</button>
+          )}
+          <button
+            className="btn-next"
+            onClick={onNext}
+            disabled={!hasAnswer}
+          >
+            {isLast ? 'Finish' : 'Next →'}
+          </button>
+        </div>
       </div>
     </div>
   )

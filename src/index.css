@@ -222,12 +222,16 @@ body {
 }
 
 .rank-image {
-  width: 52px;
-  height: 52px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   border-radius: 4px;
   background-color: #fdf6ee;
   flex-shrink: 0;
+}
+
+.rank-item--image {
+  padding: 0.4rem 0.75rem;
 }
 
 .rank-label {
@@ -319,6 +323,66 @@ body {
 .btn-next:disabled {
   opacity: 0.35;
   cursor: not-allowed;
+}
+
+.quiz-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-back {
+  background: none;
+  border: 2px solid #e0cfc0;
+  color: #9c7a5e;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.8rem 1.25rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-back:hover {
+  border-color: #D4763B;
+  color: #D4763B;
+}
+
+/* ── City Search ── */
+
+.city-search {
+  position: relative;
+}
+
+.city-suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 2px solid #D4763B;
+  border-radius: 6px;
+  list-style: none;
+  z-index: 10;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.city-suggestion-item {
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  color: #2c1a0e;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+}
+
+.city-suggestion-item:hover {
+  background-color: #fdf0e6;
+}
+
+.city-suggestion-item + .city-suggestion-item {
+  border-top: 1px solid #f0e4d4;
 }
 
 @media (max-width: 480px) {

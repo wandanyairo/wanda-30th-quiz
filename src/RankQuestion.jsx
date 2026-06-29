@@ -38,6 +38,8 @@ export default function RankQuestion({ options: initialOptions, value, onChange 
     onChange(next)
   }
 
+  const hasImages = initialOptions.some(o => o.image)
+
   return (
     <ol className="rank-list">
       {items.map((id, index) => {
@@ -45,7 +47,7 @@ export default function RankQuestion({ options: initialOptions, value, onChange 
         return (
           <li
             key={id}
-            className="rank-item"
+            className={`rank-item${hasImages ? ' rank-item--image' : ''}`}
             draggable
             onDragStart={() => onDragStart(index)}
             onDragEnter={() => onDragEnter(index)}
@@ -53,14 +55,10 @@ export default function RankQuestion({ options: initialOptions, value, onChange 
             onDragOver={e => e.preventDefault()}
           >
             <span className="rank-number">{index + 1}</span>
-            {opt.image && (
-              <img
-                className="rank-image"
-                src={opt.image}
-                alt={opt.label}
-              />
-            )}
-            <span className="rank-label">{opt.label}</span>
+            {opt.image
+              ? <img className="rank-image" src={opt.image} alt={opt.label} />
+              : <span className="rank-label">{opt.label}</span>
+            }
             <div className="rank-arrows">
               <button
                 className="rank-arrow"
