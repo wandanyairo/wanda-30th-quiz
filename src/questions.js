@@ -28,7 +28,7 @@ export const QUESTIONS = [
     type: 'rank',
     emoji: '🍷',
     text: "Rank these from Wanda's most to least preferred vessel for drinking wine",
-    hint: 'Drag to reorder — #1 is most preferred · Tap an image to view it larger',
+    hint: 'Drag to reorder — #1 is most preferred. Tap an image to enlarge it.',
     options: [
       { id: 'mug',              label: 'A Mug',                                    image: '/glasses/mug.png' },
       { id: 'angular-stem',     label: 'Angular Goblet with Tall Skinny Stem',   image: '/glasses/angular-stem.png' },
