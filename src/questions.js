@@ -84,7 +84,7 @@ export const QUESTIONS = [
     id: 'veggie',
     type: 'choice',
     emoji: '🥦',
-    text: 'Which of these veggies typically on a charcuterie board does Wanda hate?',
+    text: 'Which of these veggies that are typically found on a charcuterie board does Wanda hate?',
     options: ['Baby carrots', 'Cherry tomatoes', 'Cucumbers', 'Olives'],
   },
   {
