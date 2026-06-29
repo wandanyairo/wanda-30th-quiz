@@ -65,6 +65,7 @@ export default function QuizScreen({
 
         {question.type === 'rank' && (
           <RankQuestion
+            key={question.id}
             options={question.options}
             value={answer || []}
             onChange={onAnswer}
