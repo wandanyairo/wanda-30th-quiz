@@ -8,7 +8,7 @@ export const QUESTIONS = [
     id: 'attendance',
     type: 'choice',
     text: 'Will you be celebrating with us in person in NYC, or joining the fun from afar?',
-    options: ['In person', 'Remote'],
+    options: ['In-person', 'Remote'],
   },
   {
     id: 'favourite-fruit',
@@ -19,7 +19,7 @@ export const QUESTIONS = [
   },
   {
     id: 'if-you-were-a-wine',
-    type: 'text',
+    type: 'wine-search',
     emoji: '🍾',
     text: 'If you were a wine, what would you be and why?',
   },
@@ -30,12 +30,12 @@ export const QUESTIONS = [
     text: "Rank these wine glasses from Wanda's most to least preferred vessel for drinking wine",
     hint: 'Drag to reorder — #1 is most preferred',
     options: [
+      { id: 'mug',              label: 'A Mug',                                    image: '/glasses/mug.png' },
       { id: 'angular-stem',     label: 'Angular Goblet with Tall Skinny Stem',   image: '/glasses/angular-stem.png' },
       { id: 'rounded-stem',     label: 'Rounded Goblet with Tall Skinny Stem',    image: '/glasses/rounded-stem.png' },
+      { id: 'short-thick-stem', label: 'Short Wine Glass with Thick Stem',         image: '/glasses/short-thick-stem.png' },
       { id: 'stemless',         label: 'Stemless Wine Glass',                      image: '/glasses/stemless.png' },
       { id: 'wine-cooler-mug',  label: 'Wine Cooler Mug',                          image: '/glasses/wine-cooler-mug.png' },
-      { id: 'mug',              label: 'A Mug',                                    image: '/glasses/mug.png' },
-      { id: 'short-thick-stem', label: 'Short Wine Glass with Thick Stem',         image: '/glasses/short-thick-stem.png' },
     ],
   },
   {
@@ -45,18 +45,19 @@ export const QUESTIONS = [
     text: "Rank Wanda's Fave Wines",
     hint: 'Drag to reorder — #1 is most favourite',
     options: [
-      { id: 'rose',          label: 'Rosé' },
-      { id: 'riesling',      label: 'Riesling' },
-      { id: 'pinot-grigio',  label: 'Pinot Grigio' },
       { id: 'chilled-malbec',label: 'Chilled Malbec' },
+      { id: 'pinot-grigio',  label: 'Pinot Grigio' },
       { id: 'pinot-noir',    label: 'Pinot Noir' },
+      { id: 'riesling',      label: 'Riesling' },
+      { id: 'rose',          label: 'Rosé' },
     ],
   },
   {
     id: 'grape-debate',
-    type: 'text',
+    type: 'choice-explain',
     emoji: '🍇',
-    text: "Let's settle the great grape debate once and for all. Which grape is superior—red or green—and why?",
+    text: "Let's settle the great grape debate once and for all. Which grape is superior and why?",
+    options: ['Red grapes', 'Green grapes'],
   },
   {
     id: 'rank-cheeses',
@@ -65,11 +66,11 @@ export const QUESTIONS = [
     text: "Rank Wanda's Fave Cheeses",
     hint: 'Drag to reorder — #1 is most favourite',
     options: [
-      { id: 'feta',      label: 'Feta' },
       { id: 'brie',      label: 'Brie' },
-      { id: 'parmesan',  label: 'Parmesan' },
       { id: 'cheddar',   label: 'Cheddar' },
+      { id: 'feta',      label: 'Feta' },
       { id: 'gruyere',   label: 'Gruyère' },
+      { id: 'parmesan',  label: 'Parmesan' },
     ],
   },
   {
@@ -77,7 +78,7 @@ export const QUESTIONS = [
     type: 'text',
     emoji: '🤑',
     text: 'If you had to become a scamfluencer, what would your scam entail?',
-    hint: 'Anna Delvey is a great example!',
+    hint: 'scammers',
   },
   {
     id: 'veggie',
@@ -90,7 +91,7 @@ export const QUESTIONS = [
     id: 'advice',
     type: 'text',
     emoji: '🎂',
-    text: "If you're older than 30, what is one piece of advice you'd give to your younger self at 30 (or me)? If you're younger than 30, what do you hope that age will bring you?",
+    text: "If you're older than 30, what is one piece of advice you'd give to your younger self (or me) at 30? If you're younger than 30, what do you hope that age will bring you when it's your turn?",
   },
   {
     id: 'wishes',

@@ -1,5 +1,8 @@
 import RankQuestion from './RankQuestion.jsx'
 import CitySearch from './CitySearch.jsx'
+import WineSearch from './WineSearch.jsx'
+import ChoiceExplain from './ChoiceExplain.jsx'
+import ScammerHint from './ScammerHint.jsx'
 
 export default function QuizScreen({
   question,
@@ -30,7 +33,8 @@ export default function QuizScreen({
           {question.text}
         </h2>
 
-        {question.hint && (
+        {question.hint === 'scammers' && <ScammerHint />}
+        {question.hint && question.hint !== 'scammers' && (
           <p className="quiz-hint">{question.hint}</p>
         )}
 
@@ -49,6 +53,10 @@ export default function QuizScreen({
           />
         )}
 
+        {question.type === 'wine-search' && (
+          <WineSearch value={answer} onChange={onAnswer} />
+        )}
+
         {question.type === 'choice' && (
           <div className="quiz-choices">
             {question.options.map(option => (
@@ -63,6 +71,14 @@ export default function QuizScreen({
           </div>
         )}
 
+        {question.type === 'choice-explain' && (
+          <ChoiceExplain
+            options={question.options}
+            value={answer || {}}
+            onChange={onAnswer}
+          />
+        )}
+
         {question.type === 'rank' && (
           <RankQuestion
             key={question.id}
@@ -73,11 +89,7 @@ export default function QuizScreen({
         )}
 
         <div className="quiz-nav">
-          <button
-            className="btn-next"
-            onClick={onNext}
-            disabled={!hasAnswer}
-          >
+          <button className="btn-next" onClick={onNext} disabled={!hasAnswer}>
             {isLast ? 'Finish' : 'Next →'}
           </button>
           <button className="btn-back" onClick={onBack} disabled={currentIndex === 0}>

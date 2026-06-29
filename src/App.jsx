@@ -1,28 +1,27 @@
 import { useState } from 'react'
+import WelcomeScreen from './WelcomeScreen.jsx'
 import IntroScreen from './IntroScreen.jsx'
 import QuizScreen from './QuizScreen.jsx'
+import OutroScreen from './OutroScreen.jsx'
 import { QUESTIONS } from './questions.js'
 
 export default function App() {
-  const [screen, setScreen] = useState('intro')
+  const [screen, setScreen] = useState('welcome') // 'welcome' | 'intro' | 'quiz' | 'done'
   const [answers, setAnswers] = useState({})
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const total = QUESTIONS.length
   const question = QUESTIONS[currentIndex]
-
   const currentAnswer = answers[question?.id] ?? ''
-  const hasAnswer = Array.isArray(currentAnswer)
-    ? currentAnswer.length > 0
-    : currentAnswer.toString().trim() !== ''
 
-  function handleBack() {
-    if (currentIndex > 0) setCurrentIndex(i => i - 1)
-  }
-
-  function handleStart() {
-    setScreen('quiz')
-  }
+  const hasAnswer = (() => {
+    if (Array.isArray(currentAnswer)) return currentAnswer.length > 0
+    if (currentAnswer && typeof currentAnswer === 'object') {
+      // wine-search: need wine selected; choice-explain: need choice selected
+      return !!currentAnswer.choice?.trim() || !!currentAnswer.wine?.trim()
+    }
+    return currentAnswer.toString().trim() !== ''
+  })()
 
   function handleAnswer(value) {
     setAnswers(prev => ({ ...prev, [question.id]: value }))
@@ -37,23 +36,13 @@ export default function App() {
     }
   }
 
-  if (screen === 'intro') {
-    return <IntroScreen onStart={handleStart} />
+  function handleBack() {
+    if (currentIndex > 0) setCurrentIndex(i => i - 1)
   }
 
-  if (screen === 'done') {
-    return (
-      <div className="intro">
-        <header className="intro-header">
-          <h1>Wanda's Worldwide Wine Tours™ — The Quiz</h1>
-          <hr className="intro-divider" />
-        </header>
-        <p className="intro-tagline" style={{ textAlign: 'center' }}>
-          🥂 All done! Your answers have been submitted. See you on July 10!
-        </p>
-      </div>
-    )
-  }
+  if (screen === 'welcome') return <WelcomeScreen onNext={() => setScreen('intro')} />
+  if (screen === 'intro') return <IntroScreen onStart={() => setScreen('quiz')} onBack={() => setScreen('welcome')} />
+  if (screen === 'done') return <OutroScreen />
 
   return (
     <QuizScreen

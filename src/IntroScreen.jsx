@@ -1,15 +1,14 @@
-export default function IntroScreen({ onStart }) {
+export default function IntroScreen({ onStart, onBack }) {
   return (
     <div className="intro">
       <header className="intro-header">
-        <h1>Wanda's Worldwide Wine Tours™ — The Quiz</h1>
+        <h1>
+          Wanda's Worldwide Wine Tours™
+          <span className="title-divider"> ~ </span>
+          The Quiz
+        </h1>
         <hr className="intro-divider" />
       </header>
-
-      <p className="intro-tagline">
-        Since we can't bring Wanda around the world for a wine tour, we are
-        bringing the world to Wanda! Charcuterie themed.
-      </p>
 
       <ul className="intro-list">
         <li>This quiz is 100% anonymous—no name, no email, nothing tied to you</li>
@@ -33,6 +32,7 @@ export default function IntroScreen({ onStart }) {
 
       <div className="intro-footer">
         <button className="btn-start" onClick={onStart}>Start Quiz</button>
+        <button className="btn-back" onClick={onBack}>← Back</button>
       </div>
     </div>
   )
