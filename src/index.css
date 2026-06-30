@@ -17,46 +17,38 @@ body {
 .outro {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-}
-
-.welcome-image-placeholder,
-.outro-image-placeholder {
-  flex: 1;
-  background: linear-gradient(160deg, #fce8ec 0%, #f5c9d2 100%);
-  display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 45vh;
+  background: linear-gradient(160deg, #d95c88 0%, #f0a356 100%);
 }
 
-.welcome-image-emoji {
-  font-size: 6rem;
-  line-height: 1;
-}
-
-.welcome-text,
-.outro-text {
-  padding: 2rem 1.5rem 3rem;
-  max-width: 600px;
-  margin: 0 auto;
+.welcome-content,
+.outro-content {
+  max-width: 560px;
   width: 100%;
+  padding: 3rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 1.75rem;
   text-align: center;
 }
 
 .welcome-header {
-  padding: 2rem 1.25rem 2rem;
   text-align: center;
 }
 
 .welcome-header h1 {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #2e1b22;
-  line-height: 1.4;
+  color: #fff;
+  line-height: 1.5;
+}
+
+.welcome-tagline {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.88);
 }
 
 .welcome-year {
@@ -78,6 +70,8 @@ body {
   margin-left: 0.25rem;
   position: relative;
   top: -2px;
+  background: rgba(255,255,255,0.25);
+  color: #fff;
 }
 
 /* Pill on the intro screen */
@@ -87,17 +81,10 @@ body {
   margin-bottom: 16px;
 }
 
-.welcome-text p,
-.outro-text p {
-  font-size: 1.05rem;
-  line-height: 1.65;
-  color: #4a3038;
-}
-
 .outro-submitted {
   font-size: 1.75rem;
   font-weight: 600;
-  color: #d95c88;
+  color: #fff;
   line-height: 1.2;
 }
 
@@ -106,7 +93,7 @@ body {
   font-size: 1.6rem;
   font-weight: 400;
   font-style: italic;
-  color: #2e1b22;
+  color: rgba(255,255,255,0.95);
   line-height: 1.35;
 }
 
@@ -123,22 +110,22 @@ body {
   gap: 0.6rem;
   font-size: 0.95rem;
   line-height: 1.55;
-  color: #3d2830;
+  color: rgba(255,255,255,0.85);
 }
 
 .outro-list li::before {
   content: '•';
-  color: #d95c88;
+  color: rgba(255,255,255,0.7);
   flex-shrink: 0;
 }
 
 .outro-promo {
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #4a3038;
+  color: rgba(255,255,255,0.85);
   padding: 1rem 1.25rem;
-  background: #fce8ec;
-  border-left: 3px solid #d95c88;
+  background: rgba(255,255,255,0.15);
+  border-left: 3px solid rgba(255,255,255,0.5);
   border-radius: 4px;
   text-align: left;
 }
@@ -146,19 +133,21 @@ body {
 .outro-sign-off {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #7a2050;
+  color: #fff;
   text-align: center;
 }
 
 .outro-link {
-  color: #d95c88;
+  color: #fff;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
 
 .outro-link:hover {
-  color: #c24e78;
+  opacity: 0.8;
 }
+
+
 
 /* ── Intro Screen ── */
 
@@ -260,6 +249,18 @@ body {
   opacity: 0.8;
 }
 
+.btn-start--inverse {
+  background: #FBF2F5;
+  color: #d95c88;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.btn-start--inverse:hover {
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  opacity: 1;
+}
+
 @media (max-width: 480px) {
   .intro-header h1 {
     font-size: 1.4rem;
@@ -276,7 +277,22 @@ body {
 .quiz {
   min-height: 100vh;
   display: flex;
+  position: relative;
   flex-direction: column;
+}
+
+.quiz--submitting {
+  filter: blur(3px);
+  pointer-events: none;
+  transition: filter 0.4s ease;
+}
+
+.quiz--submitting::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(251, 242, 245, 0.5);
+  z-index: 10;
 }
 
 .quiz-progress-bar-track {

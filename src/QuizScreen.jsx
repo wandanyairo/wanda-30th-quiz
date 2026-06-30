@@ -13,11 +13,12 @@ export default function QuizScreen({
   currentIndex,
   total,
   hasAnswer,
+  submitting,
 }) {
   const isLast = currentIndex === total - 1
 
   return (
-    <div className="quiz">
+    <div className={`quiz${submitting ? ' quiz--submitting' : ''}`}>
       <div className="quiz-progress-bar-track">
         <div
           className="quiz-progress-bar-fill"

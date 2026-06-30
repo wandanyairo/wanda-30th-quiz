@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import confetti from 'canvas-confetti'
 import WelcomeScreen from './WelcomeScreen.jsx'
 import IntroScreen from './IntroScreen.jsx'
 import QuizScreen from './QuizScreen.jsx'
@@ -9,6 +10,7 @@ export default function App() {
   const [screen, setScreen] = useState('welcome') // 'welcome' | 'intro' | 'quiz' | 'done'
   const [answers, setAnswers] = useState({})
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [submitting, setSubmitting] = useState(false)
 
   const total = QUESTIONS.length
   const question = QUESTIONS[currentIndex]
@@ -31,12 +33,24 @@ export default function App() {
     setAnswers(prev => ({ ...prev, [question.id]: value }))
   }
 
+  function fireConfetti() {
+    const colors = ['#d95c88', '#7a2050', '#f5c97a', '#FBF2F5', '#c94f9c']
+    const end = Date.now() + 2500
+    ;(function frame() {
+      confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 }, colors })
+      confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 }, colors })
+      if (Date.now() < end) requestAnimationFrame(frame)
+    })()
+  }
+
   function handleNext() {
     if (!hasAnswer) return
     if (currentIndex < total - 1) {
       setCurrentIndex(i => i + 1)
     } else {
-      setScreen('done')
+      setSubmitting(true)
+      fireConfetti()
+      setTimeout(() => setScreen('done'), 2500)
     }
   }
 
@@ -62,6 +76,7 @@ export default function App() {
       currentIndex={currentIndex}
       total={total}
       hasAnswer={hasAnswer}
+      submitting={submitting}
     />
   )
 }

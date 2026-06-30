@@ -1,31 +1,7 @@
-import { useEffect, useRef } from 'react'
-import confetti from 'canvas-confetti'
-
 export default function OutroScreen() {
-  const fired = useRef(false)
-
-  useEffect(() => {
-    if (fired.current) return
-    fired.current = true
-    const duration = 3000
-    const end = Date.now() + duration
-    const colors = ['#d95c88', '#7a2050', '#f5c97a', '#FBF2F5', '#c94f9c']
-
-    ;(function frame() {
-      confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 }, colors })
-      confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 }, colors })
-      if (Date.now() < end) requestAnimationFrame(frame)
-    })()
-  }, [])
-
   return (
     <div className="outro">
-      <div className="outro-image-placeholder">
-        {/* Replace with <img> when you have the image ready */}
-        <span className="welcome-image-emoji">🥂</span>
-      </div>
-
-      <div className="outro-text">
+      <div className="outro-content">
         <p className="outro-submitted">Your answers have been submitted!</p>
         <h1 className="outro-thankyou">Thank you for participating and for repping your city <span style={{ fontStyle: 'normal' }}>🌍</span></h1>
 
