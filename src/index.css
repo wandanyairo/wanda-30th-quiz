@@ -13,6 +13,11 @@ body {
 
 /* ── Welcome / Outro Screens ── */
 
+@keyframes blurIn {
+  from { filter: blur(12px); opacity: 0; }
+  to   { filter: blur(0);    opacity: 1; }
+}
+
 .welcome,
 .outro {
   min-height: 100vh;
@@ -20,6 +25,10 @@ body {
   align-items: center;
   justify-content: center;
   background: linear-gradient(160deg, #d95c88 0%, #f0a356 100%);
+}
+
+.outro {
+  animation: blurIn 0.6s ease forwards;
 }
 
 .welcome-content,
@@ -39,15 +48,15 @@ body {
 }
 
 .welcome-header h1 {
-  font-size: 1.3rem;
+  font-size: 32px;
   font-weight: 600;
   color: #fff;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .welcome-tagline {
-  font-size: 1.05rem;
-  line-height: 1.65;
+  font-size: 16px;
+  line-height: 24px;
   color: rgba(255,255,255,0.88);
 }
 
@@ -82,19 +91,16 @@ body {
 }
 
 .outro-submitted {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.outro-thankyou {
   font-size: 1.75rem;
   font-weight: 600;
   color: #fff;
   line-height: 1.2;
-}
-
-.outro-thankyou {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.6rem;
-  font-weight: 400;
-  font-style: italic;
-  color: rgba(255,255,255,0.95);
-  line-height: 1.35;
 }
 
 .outro-list {
@@ -172,7 +178,7 @@ body {
 
 .title-divider {
   display: block;
-  color: #d95c88;
+  color: #fff;
   font-weight: 300;
   font-size: 1.5rem;
   line-height: 1.6;
@@ -698,7 +704,7 @@ body {
   flex-direction: column;
   gap: 0.4rem;
   padding: 0.75rem 1rem;
-  background: #fce8ec;
+  background: #fde8d4;
   border-radius: 6px;
   font-size: 0.875rem;
   color: #4a3038;
