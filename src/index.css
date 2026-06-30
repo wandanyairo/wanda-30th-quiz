@@ -287,7 +287,7 @@ body {
 
 .quiz-progress-bar-fill {
   height: 100%;
-  background-color: #d95c88;
+  background: linear-gradient(to right, #d95c88, #f0a356);
   border-radius: 0 2px 2px 0;
   transition: width 0.3s ease;
 }
