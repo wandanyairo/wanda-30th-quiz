@@ -64,8 +64,8 @@ body {
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: #f0a356;
-  background: #fdecd8;
+  color: #D4763B;
+  background: #fde8d4;
   border-radius: 999px;
   padding: 0.15em 0.6em;
   vertical-align: middle;
@@ -74,13 +74,15 @@ body {
 
 /* Pill on the welcome title */
 .welcome-header .welcome-year {
+  font-size: 13px;
   margin-left: 0.25rem;
   position: relative;
   top: -2px;
 }
 
-/* Space between pill and h1 on intro */
+/* Pill on the intro screen */
 .intro-header .welcome-year {
+  font-size: 13px;
   display: inline-block;
   margin-bottom: 16px;
 }
