@@ -27,8 +27,8 @@ export default function QuizScreen({
 
       <div className="quiz-inner">
         <p className="quiz-progress-label">
+          <span>{currentIndex + 1} of {total}</span>
           <span className="welcome-year">WWWT · 2026</span>
-          {currentIndex + 1} of {total}
         </p>
 
         <h2 className="quiz-question">

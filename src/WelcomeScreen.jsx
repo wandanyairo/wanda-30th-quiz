@@ -5,7 +5,7 @@ export default function WelcomeScreen({ onNext }) {
         <h1>
           Wanda's Worldwide Wine Tours™
           <span className="title-divider"> ~ </span>
-          The Quiz · 2026
+          The Quiz <span className="welcome-year">2026</span>
         </h1>
       </div>
       <div className="welcome-image-placeholder">
