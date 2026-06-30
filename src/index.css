@@ -72,10 +72,8 @@ body {
   margin-left: 0;
 }
 
-/* Bigger pill on the welcome title */
+/* Pill on the welcome title */
 .welcome-header .welcome-year {
-  font-size: 1rem;
-  padding: 0.2em 0.75em;
   margin-left: 0.25rem;
 }
 
@@ -312,8 +310,6 @@ body {
 }
 
 .quiz-progress-label .welcome-year {
-  background: #f0a356;
-  color: #fff;
   position: relative;
   top: -3px;
 }
