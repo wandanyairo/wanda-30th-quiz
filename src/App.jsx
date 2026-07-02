@@ -44,13 +44,13 @@ export default function App() {
     })()
   }
 
-  function handleNext() {
+  async function handleNext() {
     if (!hasAnswer) return
     if (currentIndex < total - 1) {
       setCurrentIndex(i => i + 1)
     } else {
       setSubmitting(true)
-      supabase.from('submissions').insert([{
+      const { error } = await supabase.from('submissions').insert([{
         city:           answers['city'],
         attendance:     answers['attendance'],
         favourite_fruit: answers['favourite-fruit'],
@@ -64,6 +64,7 @@ export default function App() {
         advice:         answers['advice'],
         wishes:         answers['wishes'],
       }])
+      if (error) console.error('Supabase insert error:', error)
       setTimeout(() => fireConfetti(), 500)
       setTimeout(() => setScreen('done'), 2500)
     }
