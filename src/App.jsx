@@ -6,6 +6,7 @@ import IntroScreen from './IntroScreen.jsx'
 import QuizScreen from './QuizScreen.jsx'
 import OutroScreen from './OutroScreen.jsx'
 import { QUESTIONS } from './questions.js'
+import { computeScore } from './scoring.js'
 
 export default function App() {
   const [screen, setScreen] = useState('welcome') // 'welcome' | 'intro' | 'quiz' | 'done'
@@ -50,7 +51,10 @@ export default function App() {
       setCurrentIndex(i => i + 1)
     } else {
       setSubmitting(true)
+      const { total, breakdown } = computeScore(answers)
       const { error } = await supabase.from('submissions').insert([{
+        score:           total,
+        score_breakdown: breakdown,
         city:           answers['city'],
         attendance:     answers['attendance'],
         favourite_fruit: answers['favourite-fruit'],
