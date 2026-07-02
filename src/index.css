@@ -430,6 +430,7 @@ body {
   border: 2px solid #e0ccd4;
   border-radius: 8px;
   padding: 0.6rem 0.75rem;
+  min-height: 52px;
   cursor: default;
   user-select: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
