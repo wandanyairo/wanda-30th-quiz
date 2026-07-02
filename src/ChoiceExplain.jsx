@@ -28,6 +28,7 @@ export default function ChoiceExplain({ options, value, onChange, readOnly = fal
               onChange={handleWhy}
               rows={4}
               autoFocus={!readOnly}
+              readOnly={readOnly}
             />
           )}
         </div>
