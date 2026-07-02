@@ -55,13 +55,13 @@ export default function RankQuestion({ options: initialOptions, value, onChange,
               <div className="rank-arrows">
                 <button
                   className="rank-arrow"
-                  onClick={() => move(index, -1)}
+                  onClick={e => { e.currentTarget.blur(); move(index, -1) }}
                   disabled={index === 0}
                   aria-label="Move up"
                 >▲</button>
                 <button
                   className="rank-arrow"
-                  onClick={() => move(index, 1)}
+                  onClick={e => { e.currentTarget.blur(); move(index, 1) }}
                   disabled={index === items.length - 1}
                   aria-label="Move down"
                 >▼</button>
