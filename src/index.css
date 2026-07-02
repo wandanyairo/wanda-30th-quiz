@@ -772,6 +772,36 @@ body {
   }
 }
 
+/* ── Read-only Quiz ── */
+
+.quiz-readonly {
+  pointer-events: none;
+  user-select: none;
+}
+
+.choice-check {
+  margin-left: auto;
+  color: #d95c88;
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.quiz-choice-btn {
+  display: flex;
+  align-items: center;
+}
+
+.quiz-score-banner {
+  font-size: 0.875rem;
+  color: #956878;
+  margin: 0;
+}
+
+.quiz-score-banner strong {
+  color: #d95c88;
+}
+
 /* ── Nickname Screen ── */
 
 .nickname-body {

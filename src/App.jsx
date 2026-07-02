@@ -6,7 +6,6 @@ import IntroScreen from './IntroScreen.jsx'
 import NicknameScreen from './NicknameScreen.jsx'
 import QuizScreen from './QuizScreen.jsx'
 import OutroScreen from './OutroScreen.jsx'
-import ReturningScreen from './ReturningScreen.jsx'
 import { QUESTIONS } from './questions.js'
 import { computeScore } from './scoring.js'
 
@@ -55,6 +54,7 @@ export default function App() {
     if (data) {
       setReturningData(data)
       setNickname(nick)
+      setCurrentIndex(0)
       setScreen('returning')
     } else {
       setNickname(nick)
@@ -118,7 +118,37 @@ export default function App() {
   if (screen === 'welcome') return <WelcomeScreen onNext={() => setScreen('intro')} />
   if (screen === 'intro') return <IntroScreen onStart={() => setScreen('nickname')} onBack={() => setScreen('welcome')} />
   if (screen === 'nickname') return <NicknameScreen onSubmit={handleNicknameSubmit} onBack={() => setScreen('intro')} loading={nicknameLoading} error={nicknameError} />
-  if (screen === 'returning') return <ReturningScreen nickname={nickname} data={returningData} />
+  if (screen === 'returning') {
+    const returningAnswers = {
+      'city':              returningData.city,
+      'attendance':        returningData.attendance,
+      'favourite-fruit':   returningData.favourite_fruit,
+      'if-you-were-a-wine': returningData.wine_self,
+      'rank-glasses':      returningData.rank_glasses,
+      'rank-wines':        returningData.rank_wines,
+      'grape-debate':      returningData.grape_debate,
+      'rank-cheeses':      returningData.rank_cheeses,
+      'scamfluencer':      returningData.scamfluencer,
+      'veggie':            returningData.veggie,
+      'advice':            returningData.advice,
+      'wishes':            returningData.wishes,
+    }
+    return (
+      <QuizScreen
+        question={question}
+        answer={returningAnswers[question?.id] ?? ''}
+        onAnswer={() => {}}
+        onNext={() => currentIndex < total - 1 ? setCurrentIndex(i => i + 1) : setScreen('welcome')}
+        onBack={() => currentIndex > 0 ? setCurrentIndex(i => i - 1) : setScreen('welcome')}
+        currentIndex={currentIndex}
+        total={total}
+        hasAnswer={true}
+        submitting={false}
+        readOnly={true}
+        score={returningData.score}
+      />
+    )
+  }
   if (screen === 'done') return <OutroScreen />
 
   return (

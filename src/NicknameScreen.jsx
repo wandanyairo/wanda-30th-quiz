@@ -35,7 +35,7 @@ export default function NicknameScreen({ onSubmit, onBack, loading, error }) {
       <div className="intro-footer">
         <div className="quiz-nav">
           <button className="btn-start" onClick={handleSubmit} disabled={!value.trim() || loading}>
-            {loading ? 'Checking…' : 'Start Quiz →'}
+            {loading ? 'Checking…' : 'Continue →'}
           </button>
           <button className="btn-back" type="button" onClick={onBack}>← Back</button>
         </div>

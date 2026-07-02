@@ -4,6 +4,8 @@ import WineSearch from './WineSearch.jsx'
 import ChoiceExplain from './ChoiceExplain.jsx'
 import ScammerHint from './ScammerHint.jsx'
 
+const REVEAL = new Date('2026-07-10T16:00:00Z')
+
 export default function QuizScreen({
   question,
   answer,
@@ -14,8 +16,11 @@ export default function QuizScreen({
   total,
   hasAnswer,
   submitting,
+  readOnly = false,
+  score = null,
 }) {
   const isLast = currentIndex === total - 1
+  const insightsUnlocked = new Date() >= REVEAL
 
   return (
     <>
@@ -38,6 +43,10 @@ export default function QuizScreen({
           <span className="welcome-year">WWWT · 2026</span>
         </p>
 
+        {readOnly && insightsUnlocked && score !== null && (
+          <p className="quiz-score-banner">Your score: <strong>{score} / 18</strong></p>
+        )}
+
         <h2 className="quiz-question">
           {question.emoji && <span className="quiz-emoji">{question.emoji} </span>}
           {question.text}
@@ -51,59 +60,63 @@ export default function QuizScreen({
           <p className="quiz-hint">{question.hint}</p>
         )}
 
-        {question.type === 'city' && (
-          <CitySearch value={answer} onChange={onAnswer} />
-        )}
+        <div className={readOnly ? 'quiz-readonly' : undefined}>
+          {question.type === 'city' && (
+            <CitySearch value={answer} onChange={onAnswer} />
+          )}
 
-        {question.type === 'text' && (
-          <textarea
-            className="quiz-textarea"
-            placeholder="Type your answer…"
-            value={answer}
-            onChange={e => onAnswer(e.target.value)}
-            rows={4}
-            autoFocus
-          />
-        )}
+          {question.type === 'text' && (
+            <textarea
+              className="quiz-textarea"
+              value={answer}
+              onChange={e => onAnswer(e.target.value)}
+              rows={4}
+              readOnly={readOnly}
+            />
+          )}
 
-        {question.type === 'wine-search' && (
-          <WineSearch value={answer} onChange={onAnswer} />
-        )}
+          {question.type === 'wine-search' && (
+            <WineSearch value={answer} onChange={onAnswer} />
+          )}
 
-        {question.type === 'choice' && (
-          <div className="quiz-choices">
-            {question.options.map(option => (
-              <button
-                key={option}
-                className={`quiz-choice-btn${answer === option ? ' selected' : ''}`}
-                onClick={() => onAnswer(option)}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        )}
+          {question.type === 'choice' && (
+            <div className="quiz-choices">
+              {question.options.map(option => (
+                <button
+                  key={option}
+                  className={`quiz-choice-btn${answer === option ? ' selected' : ''}`}
+                  onClick={() => !readOnly && onAnswer(option)}
+                >
+                  {option}
+                  {readOnly && answer === option && <span className="choice-check">✓</span>}
+                </button>
+              ))}
+            </div>
+          )}
 
-        {question.type === 'choice-explain' && (
-          <ChoiceExplain
-            options={question.options}
-            value={answer || {}}
-            onChange={onAnswer}
-          />
-        )}
+          {question.type === 'choice-explain' && (
+            <ChoiceExplain
+              options={question.options}
+              value={answer || {}}
+              onChange={onAnswer}
+            />
+          )}
 
-        {question.type === 'rank' && (
-          <RankQuestion
-            key={question.id}
-            options={question.options}
-            value={answer || []}
-            onChange={onAnswer}
-          />
-        )}
+          {question.type === 'rank' && (
+            <RankQuestion
+              key={question.id}
+              options={question.options}
+              value={answer || []}
+              onChange={onAnswer}
+            />
+          )}
+        </div>
 
         <div className="quiz-nav">
-          <button className="btn-next" onClick={onNext} disabled={!hasAnswer}>
-            {isLast ? 'Submit' : 'Next →'}
+          <button className="btn-next" onClick={onNext} disabled={!readOnly && !hasAnswer}>
+            {readOnly
+              ? isLast ? 'Done' : 'Next →'
+              : isLast ? 'Submit' : 'Next →'}
           </button>
           <button className="btn-back" onClick={onBack}>
             ← Back
