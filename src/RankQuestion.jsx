@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 
-export default function RankQuestion({ options: initialOptions, value, onChange }) {
+export default function RankQuestion({ options: initialOptions, value, onChange, correctOrder = null }) {
   const [items, setItems] = useState(() =>
     value?.length ? value : initialOptions.map(o => o.id)
   )
@@ -46,14 +46,17 @@ export default function RankQuestion({ options: initialOptions, value, onChange 
     <ol className="rank-list">
       {items.map((id, index) => {
         const opt = getOption(id)
+        const isCorrectPos = correctOrder ? correctOrder[index] === id : null
+        const shouldBe = correctOrder ? correctOrder.indexOf(id) + 1 : null
+
         return (
           <li
             key={id}
-            className={`rank-item${hasImages ? ' rank-item--image' : ''}`}
-            draggable
-            onDragStart={() => onDragStart(index)}
-            onDragEnter={() => onDragEnter(index)}
-            onDragEnd={onDragEnd}
+            className={`rank-item${hasImages ? ' rank-item--image' : ''}${correctOrder ? (isCorrectPos ? ' rank-item--correct' : ' rank-item--wrong') : ''}`}
+            draggable={!correctOrder}
+            onDragStart={() => !correctOrder && onDragStart(index)}
+            onDragEnter={() => !correctOrder && onDragEnter(index)}
+            onDragEnd={() => !correctOrder && onDragEnd()}
             onDragOver={e => e.preventDefault()}
           >
             <span className="rank-number">{index + 1}</span>
@@ -69,20 +72,26 @@ export default function RankQuestion({ options: initialOptions, value, onChange 
               )
               : <span className="rank-label">{opt.label}</span>
             }
-            <div className="rank-arrows">
-              <button
-                className="rank-arrow"
-                onClick={() => move(index, -1)}
-                disabled={index === 0}
-                aria-label="Move up"
-              >▲</button>
-              <button
-                className="rank-arrow"
-                onClick={() => move(index, 1)}
-                disabled={index === items.length - 1}
-                aria-label="Move down"
-              >▼</button>
-            </div>
+            {correctOrder ? (
+              <span className={`rank-feedback ${isCorrectPos ? 'rank-feedback--correct' : 'rank-feedback--wrong'}`}>
+                {isCorrectPos ? '✓' : `✕  #${shouldBe}`}
+              </span>
+            ) : (
+              <div className="rank-arrows">
+                <button
+                  className="rank-arrow"
+                  onClick={() => move(index, -1)}
+                  disabled={index === 0}
+                  aria-label="Move up"
+                >▲</button>
+                <button
+                  className="rank-arrow"
+                  onClick={() => move(index, 1)}
+                  disabled={index === items.length - 1}
+                  aria-label="Move down"
+                >▼</button>
+              </div>
+            )}
           </li>
         )
       })}

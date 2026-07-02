@@ -3,8 +3,16 @@ import CitySearch from './CitySearch.jsx'
 import WineSearch from './WineSearch.jsx'
 import ChoiceExplain from './ChoiceExplain.jsx'
 import ScammerHint from './ScammerHint.jsx'
+import { CORRECT_ANSWERS } from './correctAnswers.js'
 
 const REVEAL = new Date('2026-07-10T16:00:00Z')
+
+function Check() {
+  return <span className="answer-check">✓</span>
+}
+function Cross() {
+  return <span className="answer-cross">✕</span>
+}
 
 export default function QuizScreen({
   question,
@@ -18,9 +26,13 @@ export default function QuizScreen({
   submitting,
   readOnly = false,
   score = null,
+  scoreBreakdown = null,
 }) {
   const isLast = currentIndex === total - 1
   const insightsUnlocked = new Date() >= REVEAL
+  const showFeedback = readOnly && insightsUnlocked && scoreBreakdown !== null
+  const isScored = question.id in CORRECT_ANSWERS
+  const questionScore = scoreBreakdown?.[question.id] ?? null
 
   return (
     <>
@@ -61,18 +73,29 @@ export default function QuizScreen({
         )}
 
         <div className={readOnly ? 'quiz-readonly' : undefined}>
+
           {question.type === 'city' && (
             <CitySearch value={answer} onChange={onAnswer} />
           )}
 
           {question.type === 'text' && (
-            <textarea
-              className="quiz-textarea"
-              value={answer}
-              onChange={e => onAnswer(e.target.value)}
-              rows={4}
-              readOnly={readOnly}
-            />
+            <>
+              <textarea
+                className="quiz-textarea"
+                value={answer}
+                onChange={e => onAnswer(e.target.value)}
+                rows={4}
+                readOnly={readOnly}
+              />
+              {showFeedback && isScored && (
+                <div className="answer-feedback-text">
+                  {questionScore > 0
+                    ? <p className="answer-feedback-correct"><Check /> Correct!</p>
+                    : <p className="answer-feedback-wrong"><Cross /> Not quite—the answer is green apples (granny smith to be precise)</p>
+                  }
+                </div>
+              )}
+            </>
           )}
 
           {question.type === 'wine-search' && (
@@ -81,16 +104,27 @@ export default function QuizScreen({
 
           {question.type === 'choice' && (
             <div className="quiz-choices">
-              {question.options.map(option => (
-                <button
-                  key={option}
-                  className={`quiz-choice-btn${answer === option ? ' selected' : ''}`}
-                  onClick={() => !readOnly && onAnswer(option)}
-                >
-                  {option}
-                  {readOnly && answer === option && <span className="choice-check">✓</span>}
-                </button>
-              ))}
+              {question.options.map(option => {
+                const isSelected = answer === option
+                const correct = CORRECT_ANSWERS[question.id]
+                const isCorrectOption = correct === option
+                let indicator = null
+                if (showFeedback && isScored) {
+                  if (isSelected && questionScore > 0) indicator = <Check />
+                  else if (isSelected && questionScore === 0) indicator = <Cross />
+                  else if (!isSelected && isCorrectOption) indicator = <Check />
+                }
+                return (
+                  <button
+                    key={option}
+                    className={`quiz-choice-btn${isSelected ? ' selected' : ''}${showFeedback && isScored && !isSelected && isCorrectOption ? ' correct-reveal' : ''}`}
+                    onClick={() => !readOnly && onAnswer(option)}
+                  >
+                    {option}
+                    {indicator && <span className="choice-indicator">{indicator}</span>}
+                  </button>
+                )
+              })}
             </div>
           )}
 
@@ -102,14 +136,19 @@ export default function QuizScreen({
             />
           )}
 
-          {question.type === 'rank' && (
-            <RankQuestion
-              key={question.id}
-              options={question.options}
-              value={answer || []}
-              onChange={onAnswer}
-            />
-          )}
+          {question.type === 'rank' && (() => {
+            const correctOrder = showFeedback && isScored ? CORRECT_ANSWERS[question.id] : null
+            return (
+              <RankQuestion
+                key={question.id}
+                options={question.options}
+                value={answer || []}
+                onChange={onAnswer}
+                correctOrder={correctOrder}
+              />
+            )
+          })()}
+
         </div>
 
         <div className="quiz-nav">

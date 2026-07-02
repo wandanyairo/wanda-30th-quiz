@@ -2,7 +2,7 @@ import { CORRECT_ANSWERS, MAX_SCORE } from './correctAnswers.js'
 
 function scoreFruit(answer) {
   const lower = (answer ?? '').toLowerCase()
-  return CORRECT_ANSWERS['favourite-fruit'].terms.some(t => lower.includes(t)) ? 1 : 0
+  return (lower.includes('apple') || lower.includes('granny smith') || lower === 'green' || lower.startsWith('green ') || lower.endsWith(' green')) ? 1 : 0
 }
 
 function scoreRank(questionId, answer) {

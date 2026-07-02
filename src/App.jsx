@@ -146,6 +146,7 @@ export default function App() {
         submitting={false}
         readOnly={true}
         score={returningData.score}
+        scoreBreakdown={returningData.score_breakdown}
       />
     )
   }
