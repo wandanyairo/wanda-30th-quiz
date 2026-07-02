@@ -815,7 +815,7 @@ body {
 .quiz-score-banner {
   font-size: 0.875rem;
   color: #956878;
-  margin: 0;
+  margin: -0.5rem 0;
 }
 
 .quiz-score-banner strong {
@@ -864,7 +864,14 @@ body {
 
 .quiz-choice-btn.correct-reveal {
   border-color: #2a9d5c;
-  background-color: #f0faf5;
+}
+
+.quiz-textarea.textarea--correct {
+  border-color: #2a9d5c;
+}
+
+.quiz-textarea.textarea--wrong {
+  border-color: #b0919d;
 }
 
 .rank-feedback {

@@ -81,7 +81,7 @@ export default function QuizScreen({
           {question.type === 'text' && (
             <>
               <textarea
-                className="quiz-textarea"
+                className={`quiz-textarea${showFeedback && isScored ? (questionScore > 0 ? ' textarea--correct' : ' textarea--wrong') : ''}`}
                 value={answer}
                 onChange={e => onAnswer(e.target.value)}
                 rows={4}
