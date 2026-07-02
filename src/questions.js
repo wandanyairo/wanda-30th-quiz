@@ -21,7 +21,7 @@ export const QUESTIONS = [
     id: 'if-you-were-a-wine',
     type: 'wine-search',
     emoji: '🍾',
-    text: 'If you were a wine, what would you be and why?',
+    text: 'If you were a wine, which wine would you be and why?',
     hint: "Think critically about this, don't just pick your fave wine because it's your fave!",
   },
   {
