@@ -72,13 +72,11 @@ export default function RankQuestion({ options: initialOptions, value, onChange,
               )
               : <span className="rank-label">{opt.label}</span>
             }
-            {(correctOrder || readOnly) ? (
-              {correctOrder && (
-                <span className={`rank-feedback ${isCorrectPos ? 'rank-feedback--correct' : 'rank-feedback--wrong'}`}>
-                  {isCorrectPos ? '✓' : `✕  #${shouldBe}`}
-                </span>
-              )}
-            ) : (
+            {correctOrder ? (
+              <span className={`rank-feedback ${isCorrectPos ? 'rank-feedback--correct' : 'rank-feedback--wrong'}`}>
+                {isCorrectPos ? '✓' : `✕  #${shouldBe}`}
+              </span>
+            ) : readOnly ? null : (
               <div className="rank-arrows">
                 <button
                   className="rank-arrow"
