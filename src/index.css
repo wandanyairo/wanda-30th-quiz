@@ -562,7 +562,6 @@ body {
 }
 
 .btn-next {
-  align-self: flex-start;
   background-color: #d95c88;
   color: #fff;
   font-family: 'DM Sans', sans-serif;
