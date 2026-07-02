@@ -31,7 +31,7 @@ export default function NicknameScreen({ onSubmit, onBack, loading, error }) {
             autoFocus
           />
           {error && <p className="nickname-error">{error}</p>}
-          <button className="btn-start btn-start--inverse" type="submit" disabled={!value.trim() || loading}>
+          <button className="btn-start" type="submit" disabled={!value.trim() || loading}>
             {loading ? 'Checking…' : 'Continue →'}
           </button>
         </form>
