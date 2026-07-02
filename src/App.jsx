@@ -49,7 +49,7 @@ export default function App() {
       setCurrentIndex(i => i + 1)
     } else {
       setSubmitting(true)
-      fireConfetti()
+      setTimeout(() => fireConfetti(), 500)
       setTimeout(() => setScreen('done'), 2500)
     }
   }
