@@ -430,7 +430,7 @@ body {
   border: 2px solid #e0ccd4;
   border-radius: 8px;
   padding: 0.6rem 0.75rem;
-  min-height: 52px;
+  min-height: 55px;
   cursor: grab;
   user-select: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -475,6 +475,8 @@ body {
   flex-direction: column;
   gap: 2px;
   flex-shrink: 0;
+  height: 36px;
+  justify-content: center;
 }
 
 .rank-arrow {
