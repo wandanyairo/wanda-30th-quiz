@@ -28,7 +28,8 @@ body {
 }
 
 .outro {
-  animation: blurIn 0.6s ease forwards;
+  opacity: 0;
+  animation: blurIn 0.6s 0.2s ease forwards;
 }
 
 .welcome-content,

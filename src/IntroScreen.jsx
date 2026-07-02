@@ -10,9 +10,7 @@ export default function IntroScreen({ onStart }) {
       <ul className="intro-list">
         <li>This quiz is 100% anonymous—no name, no email, nothing tied to you</li>
         <li>
-          You will be asked for your city and whether you're celebrating in person
-          in NYC or joining from afar—this is solely for prize allocation purposes
-          (and to see how worldwide the quiz is!)
+          You will be asked for your city and whether you're celebrating remotely or in person at the soirée in NYC—this is solely for prize allocation purposes
         </li>
         <li>
           There are 10 questions total, it should take around 10 minutes to finish

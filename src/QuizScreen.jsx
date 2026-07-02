@@ -18,12 +18,13 @@ export default function QuizScreen({
   const isLast = currentIndex === total - 1
 
   return (
+    <>
+    {submitting && (
+      <div className="quiz-submit-overlay">
+        <p className="quiz-submit-message">Your answers have been submitted!</p>
+      </div>
+    )}
     <div className={`quiz${submitting ? ' quiz--submitting' : ''}`}>
-      {submitting && (
-        <div className="quiz-submit-overlay">
-          <p className="quiz-submit-message">Your answers have been submitted!</p>
-        </div>
-      )}
       <div className="quiz-progress-bar-track">
         <div
           className="quiz-progress-bar-fill"
@@ -110,5 +111,6 @@ export default function QuizScreen({
         </div>
       </div>
     </div>
+    </>
   )
 }
