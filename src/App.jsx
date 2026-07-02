@@ -3,16 +3,22 @@ import confetti from 'canvas-confetti'
 import { supabase } from './supabase.js'
 import WelcomeScreen from './WelcomeScreen.jsx'
 import IntroScreen from './IntroScreen.jsx'
+import NicknameScreen from './NicknameScreen.jsx'
 import QuizScreen from './QuizScreen.jsx'
 import OutroScreen from './OutroScreen.jsx'
+import ReturningScreen from './ReturningScreen.jsx'
 import { QUESTIONS } from './questions.js'
 import { computeScore } from './scoring.js'
 
 export default function App() {
-  const [screen, setScreen] = useState('welcome') // 'welcome' | 'intro' | 'quiz' | 'done'
+  const [screen, setScreen] = useState('welcome') // 'welcome' | 'intro' | 'nickname' | 'quiz' | 'done' | 'returning'
   const [answers, setAnswers] = useState({})
   const [currentIndex, setCurrentIndex] = useState(0)
   const [submitting, setSubmitting] = useState(false)
+  const [nickname, setNickname] = useState('')
+  const [nicknameLoading, setNicknameLoading] = useState(false)
+  const [nicknameError, setNicknameError] = useState('')
+  const [returningData, setReturningData] = useState(null)
 
   const total = QUESTIONS.length
   const question = QUESTIONS[currentIndex]
@@ -30,6 +36,32 @@ export default function App() {
     }
     return currentAnswer.toString().trim() !== ''
   })()
+
+  async function handleNicknameSubmit(nick) {
+    setNicknameLoading(true)
+    setNicknameError('')
+    const { data, error } = await supabase
+      .from('submissions')
+      .select('*')
+      .eq('nickname', nick)
+      .maybeSingle()
+
+    if (error) {
+      setNicknameError('Something went wrong — please try again.')
+      setNicknameLoading(false)
+      return
+    }
+
+    if (data) {
+      setReturningData(data)
+      setNickname(nick)
+      setScreen('returning')
+    } else {
+      setNickname(nick)
+      setScreen('quiz')
+    }
+    setNicknameLoading(false)
+  }
 
   function handleAnswer(value) {
     setAnswers(prev => ({ ...prev, [question.id]: value }))
@@ -55,6 +87,7 @@ export default function App() {
       const { error } = await supabase.from('submissions').insert([{
         score:           total,
         score_breakdown: breakdown,
+        nickname:        nickname,
         city:           answers['city'],
         attendance:     answers['attendance'],
         favourite_fruit: answers['favourite-fruit'],
@@ -83,7 +116,9 @@ export default function App() {
   }
 
   if (screen === 'welcome') return <WelcomeScreen onNext={() => setScreen('intro')} />
-  if (screen === 'intro') return <IntroScreen onStart={() => setScreen('quiz')} onBack={() => setScreen('welcome')} />
+  if (screen === 'intro') return <IntroScreen onStart={() => setScreen('nickname')} onBack={() => setScreen('welcome')} />
+  if (screen === 'nickname') return <NicknameScreen onSubmit={handleNicknameSubmit} onBack={() => setScreen('intro')} loading={nicknameLoading} error={nicknameError} />
+  if (screen === 'returning') return <ReturningScreen nickname={nickname} data={returningData} />
   if (screen === 'done') return <OutroScreen />
 
   return (
