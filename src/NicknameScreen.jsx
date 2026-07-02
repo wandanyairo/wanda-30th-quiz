@@ -18,7 +18,7 @@ export default function NicknameScreen({ onSubmit, onBack, loading, error }) {
 
       <div className="nickname-body">
         <p className="nickname-desc">
-          Your nickname lets you come back to this link anytime to see your answers and also to see the results once they are revealed. Your nickname also ensures that if you win a prize, it is properly allocated to you! So pick something that you will remember.
+          Your nickname lets you come back to this link anytime to see your answers and also to see the results once they are revealed. Your nickname also ensures that if you win a prize, it is properly allocated to you! So pick something unique that you will remember.
         </p>
         <input
           className="nickname-input"
