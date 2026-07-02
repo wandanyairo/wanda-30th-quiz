@@ -5,12 +5,9 @@ export default function OutroScreen() {
         <h1 className="outro-thankyou">Thank you for participating 🌍🍷</h1>
 
         <ul className="outro-list">
-          <li>Reminder: this was fully anonymous</li>
+          <li>Reminder: this was anonymous</li>
           <li>You can return to this link anytime to see the questions and your answers</li>
-          <li>
-            Answers will be revealed on July 10 at the party (for those attending)
-            and remotely via a Partiful Card (for those not attending)
-          </li>
+          <li>Answers will be revealed on July 10 at the soirée and remotely</li>
         </ul>
 
         <p className="outro-promo">
