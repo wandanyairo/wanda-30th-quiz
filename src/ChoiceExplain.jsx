@@ -1,4 +1,4 @@
-export default function ChoiceExplain({ options, value, onChange }) {
+export default function ChoiceExplain({ options, value, onChange, readOnly = false }) {
   const choice = value?.choice || ''
   const why = value?.why || ''
 
@@ -27,7 +27,7 @@ export default function ChoiceExplain({ options, value, onChange }) {
               value={why}
               onChange={handleWhy}
               rows={4}
-              autoFocus
+              autoFocus={!readOnly}
             />
           )}
         </div>
