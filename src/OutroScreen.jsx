@@ -1,4 +1,4 @@
-const REVEAL = new Date('2025-01-01T00:00:00Z')
+const REVEAL = new Date('2026-07-10T16:00:00Z')
 const MAX = 18
 
 export default function OutroScreen({ score = null }) {

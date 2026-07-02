@@ -5,7 +5,7 @@ import ChoiceExplain from './ChoiceExplain.jsx'
 import ScammerHint from './ScammerHint.jsx'
 import { CORRECT_ANSWERS } from './correctAnswers.js'
 
-const REVEAL = new Date('2025-01-01T00:00:00Z')
+const REVEAL = new Date('2026-07-10T16:00:00Z')
 
 function Check() {
   return <span className="answer-check">✓</span>
