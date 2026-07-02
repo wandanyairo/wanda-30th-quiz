@@ -117,7 +117,7 @@ export default function QuizScreen({
                 return (
                   <button
                     key={option}
-                    className={`quiz-choice-btn${isSelected ? ' selected' : ''}${showFeedback && isScored && !isSelected && isCorrectOption ? ' correct-reveal' : ''}`}
+                    className={`quiz-choice-btn${isSelected ? ' selected' : ''}${showFeedback && isScored && isCorrectOption ? ' correct-reveal' : ''}`}
                     onClick={() => !readOnly && onAnswer(option)}
                   >
                     {option}
