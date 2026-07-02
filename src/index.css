@@ -472,7 +472,7 @@ body {
 .rank-arrows {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 8px;
   flex-shrink: 0;
   justify-content: center;
   margin-left: auto;
