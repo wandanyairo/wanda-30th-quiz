@@ -8,8 +8,7 @@ export default function IntroScreen({ onStart }) {
       </header>
 
       <ul className="intro-list">
-        <li>This quiz is anonymous</li>
-        <li>You will pick a nickname—this allows you to return to this link to view your answers and the results when they are revealed</li>
+        <li>This quiz is anonymous but you must pick a nickname</li>
         <li>
           You will be asked for your city and whether you're celebrating remotely or in person at the soirée in NYC—this is solely for prize allocation purposes
         </li>
