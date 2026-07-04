@@ -74,6 +74,12 @@
       border-radius: 50%;
       background: #4ade80;
       flex-shrink: 0;
+      animation: livePulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { background: #16a34a; transform: scale(1); }
+      50%       { background: #4ade80; transform: scale(1.3); }
     }
 
     .main {
@@ -703,8 +709,10 @@
     renderLeaderboard(remote,   'lbRemote');
     rerenderTables();
 
+    const now = new Date();
     document.getElementById('lastUpdated').textContent =
-      'Updated ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      'Updated ' + now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+      + ' · ' + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
   }
 
   refresh();
