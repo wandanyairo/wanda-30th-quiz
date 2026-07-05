@@ -297,7 +297,21 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .cell-nick { font-weight: 600; color: #2e1b22; }
+    .cell-nick {
+      font-weight: 600;
+      color: #2e1b22;
+      position: sticky;
+      left: 0;
+      background: #fff;
+      z-index: 1;
+    }
+    tbody tr:hover .cell-nick { background: #fdf8fa; }
+    thead th.col-nick {
+      position: sticky;
+      left: 0;
+      background: #fdf8fa;
+      z-index: 2;
+    }
     .cell-city { color: #956878; font-size: 0.8rem; white-space: nowrap; }
     .cell-muted { color: #c0a0aa; font-size: 0.8rem; }
     .cell-wine { font-weight: 500; color: #2e1b22; }
@@ -541,12 +555,13 @@
     rerenderTables();
   }
 
-  function thSort(label, tableKey, col) {
+  function thSort(label, tableKey, col, extra) {
     const s = sortState[tableKey];
     const active = s.col === col;
     const icon = active ? (s.dir === 'asc' ? '↑' : '↓') : '↕';
     const iconClass = active ? 'sort-icon sort-icon--active' : 'sort-icon';
-    return `<th class="sortable" onclick="toggleSort('${tableKey}','${col}')">${label}<i class="${iconClass}">${icon}</i></th>`;
+    const cls = extra ? `sortable ${extra}` : 'sortable';
+    return `<th class="${cls}" onclick="toggleSort('${tableKey}','${col}')">${label}<i class="${iconClass}">${icon}</i></th>`;
   }
 
   function fmtRank(arr, labels) {
@@ -610,7 +625,7 @@
     }).join('');
     el.innerHTML = `<table>
       <thead><tr>
-        ${thSort('Nickname', 'scoreboard', 'nickname')}
+        ${thSort('Nickname', 'scoreboard', 'nickname', 'col-nick')}
         <th>Attendance</th>
         <th>Score</th>
         <th>Fave Fruit</th>
@@ -648,7 +663,7 @@
     }).join('');
     el.innerHTML = `<table>
       <thead><tr>
-        ${thSort('Nickname', 'personality', 'nickname')}
+        ${thSort('Nickname', 'personality', 'nickname', 'col-nick')}
         ${thSort('City', 'personality', 'city')}
         <th>Wine Self</th>
         <th>Grape Debate</th>
@@ -672,7 +687,7 @@
     </tr>`).join('');
     el.innerHTML = `<table>
       <thead><tr>
-        ${thSort('Nickname', 'heartfelt', 'nickname')}
+        ${thSort('Nickname', 'heartfelt', 'nickname', 'col-nick')}
         ${thSort('City', 'heartfelt', 'city')}
         <th>Advice</th>
         <th>Wishes</th>
