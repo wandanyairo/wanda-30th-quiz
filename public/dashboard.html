@@ -138,80 +138,6 @@
       line-height: 1.4;
     }
 
-    /* Answer key — horizontal tiles */
-    .answers-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.875rem;
-      align-items: flex-start;
-    }
-
-    .answer-tile {
-      background: #fff;
-      border: 1.5px solid #e0ccd4;
-      border-radius: 12px;
-      padding: 1rem 1.25rem;
-      flex: 1;
-      min-width: 140px;
-    }
-
-    .answer-tile-header {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-bottom: 0.65rem;
-    }
-
-    .answer-icon {
-      font-size: 0.95rem;
-      flex-shrink: 0;
-    }
-
-    .answer-key-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #956878;
-    }
-
-    .answer-val {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #2e1b22;
-    }
-
-    .answer-seq {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .answer-seq-item {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #2e1b22;
-    }
-
-    .answer-seq-num {
-      font-size: 0.58rem;
-      font-weight: 700;
-      color: #d95c88;
-      background: #fde8ec;
-      border-radius: 999px;
-      padding: 0.1em 0.45em;
-      flex-shrink: 0;
-    }
-
-    .answer-tbd {
-      font-size: 0.82rem;
-      color: #c0a0aa;
-      font-style: italic;
-    }
-
     /* Leaderboard */
     .leaderboard-grid {
       display: grid;
@@ -531,7 +457,9 @@
 
   <section>
     <div class="section-label">Answer Key — Wanda's actual answers</div>
-    <div class="answers-grid" id="answersCard"></div>
+    <div class="table-card">
+      <div class="table-scroll" id="answersCard"></div>
+    </div>
   </section>
 
   <section>
@@ -592,7 +520,7 @@
     'feta': 'Feta',
     'parmesan': 'Parmesan',
     'brie': 'Brie',
-    'gruyere': 'Gruуère',
+    'gruyere': 'Gruère',
     'cheddar': 'Cheddar'
   };
 
@@ -720,30 +648,22 @@
     const el = document.getElementById('answersCard');
     if (!el) return;
     const c = CORRECT_ANSWERS;
-
-    function seqHtml(arr, labels) {
-      if (!arr) return '<span class="answer-tbd">To be added</span>';
-      return `<div class="answer-seq">${arr.map((k, i) =>
-        `<span class="answer-seq-item"><span class="answer-seq-num">${i + 1}</span>${esc(labels[k] || k)}</span>`
-      ).join('')}</div>`;
-    }
-
-    function tile(icon, label, body) {
-      return `<div class="answer-tile">
-        <div class="answer-tile-header">
-          <span class="answer-icon">${icon}</span>
-          <span class="answer-key-label">${label}</span>
-        </div>
-        ${body}
-      </div>`;
-    }
-
-    el.innerHTML =
-      tile('🍎', 'Fave Fruit',     `<span class="answer-val">${esc(c.favourite_fruit || '—')}</span>`) +
-      tile('🫒', 'Fave Veggie',    `<span class="answer-val">${esc(c.veggie || '—')}</span>`) +
-      tile('🍷', 'Wine Ranking',   seqHtml(c.rank_wines,   WINE_LABELS)) +
-      tile('🧀', 'Cheese Ranking', seqHtml(c.rank_cheeses, CHEESE_LABELS)) +
-      tile('🥂', 'Glass Ranking',  seqHtml(c.rank_glasses, GLASS_LABELS));
+    el.innerHTML = `<table>
+      <thead><tr>
+        <th>Fave Fruit</th>
+        <th>Rank Glasses</th>
+        <th>Rank Wines</th>
+        <th>Rank Cheeses</th>
+        <th>Veggie</th>
+      </tr></thead>
+      <tbody><tr>
+        <td>${esc(c.favourite_fruit || '—')}</td>
+        <td>${fmtRank(c.rank_glasses, GLASS_LABELS)}</td>
+        <td>${fmtRank(c.rank_wines,   WINE_LABELS)}</td>
+        <td>${fmtRank(c.rank_cheeses, CHEESE_LABELS)}</td>
+        <td>${esc(c.veggie || '—')}</td>
+      </tr></tbody>
+    </table>`;
   }
 
   function renderLeaderboard(entries, id) {
