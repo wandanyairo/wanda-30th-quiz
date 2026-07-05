@@ -6,7 +6,7 @@
   <title>WWWT 2026 · Results Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -93,7 +93,7 @@
 
     .section-label {
       font-size: 1.35rem;
-      font-family: Georgia, 'Times New Roman', serif;
+      font-family: 'Playfair Display', Georgia, serif;
       font-weight: 400;
       letter-spacing: 0;
       color: #956878;
@@ -168,7 +168,7 @@
       align-items: center;
       cursor: help;
       font-size: 0.85rem;
-      color: #c0a0aa;
+      color: #956878;
       vertical-align: middle;
       margin-left: 0.35rem;
     }
@@ -810,7 +810,7 @@
   function renderStats(data) {
     const n = data.length;
     const scores = data.map(r => r.score ?? 0);
-    const avg = n ? (scores.reduce((a,b) => a+b, 0) / n).toFixed(1) : '—';
+    const avg = n ? Math.round(scores.reduce((a,b) => a+b, 0) / n) : '—';
     const top = n ? Math.max(...scores) : '—';
     const ip = data.filter(r => isInPerson(r.attendance)).length;
     const rm = data.filter(r => /^remote$/i.test((r.attendance || '').trim())).length;
