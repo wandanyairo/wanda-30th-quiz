@@ -727,7 +727,7 @@
 
     const now = new Date();
     document.getElementById('lastUpdated').textContent =
-      'Updated ' + now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+      'Updated ' + now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       + ' · ' + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
   }
 
