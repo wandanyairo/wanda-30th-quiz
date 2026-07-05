@@ -92,12 +92,13 @@
     }
 
     .section-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.13em;
-      text-transform: uppercase;
+      font-size: 1.35rem;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: 400;
+      letter-spacing: 0;
       color: #956878;
       margin-bottom: 0.8rem;
+      line-height: 1.2;
     }
 
     .stats-row {
@@ -160,6 +161,37 @@
       color: #b89aa4;
       margin-top: 0.2rem;
     }
+
+    .info-icon {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      cursor: help;
+      font-size: 0.85rem;
+      color: #c0a0aa;
+      vertical-align: middle;
+      margin-left: 0.35rem;
+    }
+    .info-icon::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 1.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #2e1b22;
+      color: #fff;
+      padding: 0.3em 0.65em;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+      z-index: 10;
+    }
+    .info-icon:hover::after { opacity: 1; }
 
     /* Glass image modal */
     .glass-modal-overlay {
@@ -455,7 +487,7 @@
 
 <header class="header">
   <div>
-    <div class="header-eyebrow">Wanda's Worldwide Wine Tours™ ~ The Quiz</div>
+    <div class="header-eyebrow">Wanda’s Worldwide Wine Tours™ ~ The Quiz</div>
     <div class="header-title">
       Results Dashboard 🍷
       <span class="header-pill">WWWT · 2026</span>
@@ -504,7 +536,7 @@
   </section>
 
   <section>
-    <div class="section-label">Leaderboard — ties broken by earliest submission</div>
+    <div class="section-label">Leaderboard <span class="info-icon" data-tooltip="Ties broken by earliest submission">ⓘ</span></div>
     <div class="leaderboard-grid">
       <div class="lb-card">
         <div class="lb-card-header">
@@ -524,7 +556,7 @@
   </section>
 
   <section>
-    <div class="section-label">Answer Key — Wanda's actual answers</div>
+    <div class="section-label">Wanda’s Answers</div>
     <div class="table-card">
       <div class="table-scroll" id="answersCard"></div>
     </div>
@@ -845,7 +877,7 @@
       return `<tr>
         <td class="cell-nick">
           ${esc(r.nickname || '—')}
-          <div style="margin-top:0.3rem"><span class="chip ${ip ? 'chip--inperson' : 'chip--remote'}">${esc(attendanceLabel)}</span></div>
+          <div style="margin-top:4px"><span class="chip ${ip ? 'chip--inperson' : 'chip--remote'}">${esc(attendanceLabel)}</span></div>
         </td>
         <td><span class="score-circle">${r.score ?? '—'}</span></td>
         <td>${esc(r.favourite_fruit || '—')}</td>
