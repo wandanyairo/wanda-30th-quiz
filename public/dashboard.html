@@ -221,7 +221,7 @@
       right: 1rem;
       background: #fff;
       border: none;
-      border-radius: 50%;  
+      border-radius: 50%;
       width: 2.2rem;
       height: 2.2rem;
       font-size: 1rem;
@@ -848,8 +848,8 @@
     function titleCase(s) { return s.replace(/\b\w/g, c => c.toUpperCase()); }
 
     document.getElementById('statTotal').textContent = n;
-    document.getElementById('statAvg').textContent = avg;
-    document.getElementById('statTop').textContent = top;
+    document.getElementById('statAvg').innerHTML = avg + '<span style="font-size:0.5em;font-weight:700;opacity:0.55;margin-left:0.15em">/18</span>';
+    document.getElementById('statTop').innerHTML = top + '<span style="font-size:0.5em;font-weight:700;opacity:0.55;margin-left:0.15em">/18</span>';
     document.getElementById('statSplit').innerHTML = pill(`${ip} in person`) + pill(`${rm} remote`);
     const grapeWinnerLabel = red > green ? 'Red' : green > red ? 'Green' : 'Tied';
     const grapeEl = document.getElementById('statGrapeWinner');
