@@ -564,6 +564,7 @@
     </div>
   </section>
 
+
   <div id="glassModal" class="glass-modal-overlay" style="display:none" onclick="closeGlassModal()">
     <button class="glass-modal-close" onclick="event.stopPropagation();closeGlassModal()" aria-label="Close">✕</button>
     <img id="glassModalImg" class="glass-modal-img" src="" alt="" onclick="event.stopPropagation()">
@@ -733,7 +734,7 @@
     document.getElementById('glassModalImg').src = '';
   }
 
-  function renderAnswersCard() {
+    function renderAnswersCard() {
     const el = document.getElementById('answersCard');
     if (!el) return;
     const c = CORRECT_ANSWERS;
@@ -790,14 +791,18 @@
     const ip = data.filter(r => isInPerson(r.attendance)).length;
     const rm = data.filter(r => /^remote$/i.test((r.attendance || '').trim())).length;
 
+    // Grape debate
     const red   = data.filter(r => (r.grape_debate || {}).choice === 'Red').length;
     const green = data.filter(r => (r.grape_debate || {}).choice === 'Green').length;
+    const grapeWinner = red > green ? 'Red leads' : green > red ? 'Green leads' : 'Tied';
 
+    // Cities & countries
     const cityNames = data.map(r => normalizeCity(r.city)).filter(Boolean);
     const uniqueCities = new Set(cityNames).size;
     const countries = new Set(data.map(r => inferCountry(r.city)).filter(Boolean));
     const uniqueCountries = countries.size;
 
+    // Wine self-identification (exclude non-answers)
     const wines = data
       .map(r => (r.wine_self || {}).wine)
       .filter(w => w && !/idk|don't know|sparkling water/i.test(w));
