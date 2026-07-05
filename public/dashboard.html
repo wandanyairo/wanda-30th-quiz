@@ -100,25 +100,17 @@
       margin-bottom: 0.8rem;
     }
 
-    .overview-wrap {
-      background: linear-gradient(135deg, #fce8ef 0%, #fef4e8 100%);
-      border: 1.5px solid #e4c4d2;
-      border-radius: 16px;
-      padding: 1.5rem;
-    }
-    .overview-wrap .section-label { color: #bf4070; margin-bottom: 1rem; }
-
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 0.875rem;
     }
 
     .stat-card {
-      background: #fff;
-      border: 1.5px solid #e0ccd4;
+      background: linear-gradient(135deg, #fce8ef 0%, #fef4e8 100%);
+      border: 1.5px solid #e4c4d2;
       border-radius: 12px;
-      padding: 1.1rem 1.25rem 1rem;
+      padding: 1rem 1.1rem 0.9rem;
     }
 
     .stat-label {
@@ -132,7 +124,7 @@
     }
 
     .stat-value {
-      font-size: 2.2rem;
+      font-size: 1.9rem;
       font-weight: 800;
       color: #d95c88;
       line-height: 1;
@@ -140,10 +132,20 @@
     }
 
     .stat-sub {
-      font-size: 0.65rem;
-      color: #b89aa4;
-      margin-top: 0.4rem;
-      line-height: 1.4;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-top: 0.45rem;
+    }
+    .stat-pill {
+      font-size: 0.58rem;
+      font-weight: 700;
+      background: #d95c88;
+      color: #FBF2F5;
+      border-radius: 4px;
+      padding: 0.15em 0.5em;
+      display: inline-block;
+      white-space: nowrap;
     }
 
     .stat-pair {
@@ -435,9 +437,12 @@
       font-style: italic;
     }
 
+    @media (max-width: 900px) {
+      .stats-row { grid-template-columns: repeat(3, 1fr); }
+    }
     @media (max-width: 720px) {
       .stats-row { grid-template-columns: repeat(2, 1fr); }
-      .stat-value { font-size: 1.8rem; }
+      .stat-value { font-size: 1.7rem; }
       .leaderboard-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
@@ -467,9 +472,8 @@
 <main class="main">
 
   <section>
-    <div class="overview-wrap">
-      <div class="section-label">Overview</div>
-      <div class="stats-row">
+    <div class="section-label">Overview</div>
+    <div class="stats-row">
         <div class="stat-card">
           <div class="stat-label">Participants</div>
           <div class="stat-value" id="statTotal">—</div>
@@ -489,24 +493,15 @@
           <div class="stat-sub" id="statGrapeSub"></div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Cities · Countries</div>
-          <div class="stat-pair">
-            <div class="stat-pair-item">
-              <div class="stat-value" id="statCities">—</div>
-              <div class="stat-pair-micro">cities</div>
-            </div>
-            <div class="stat-pair-item">
-              <div class="stat-value" id="statCountries">—</div>
-              <div class="stat-pair-micro">countries</div>
-            </div>
-          </div>
+          <div class="stat-label">Geography</div>
+          <div class="stat-value" id="statCities">—</div>
+          <div class="stat-sub" id="statGeographySub"></div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Wine Identities</div>
           <div class="stat-value" id="statWines">—</div>
           <div class="stat-sub" id="statWinesSub"></div>
         </div>
-      </div>
     </div>
   </section>
 
@@ -794,7 +789,6 @@
     // Grape debate
     const red   = data.filter(r => (r.grape_debate || {}).choice === 'Red').length;
     const green = data.filter(r => (r.grape_debate || {}).choice === 'Green').length;
-    const grapeWinner = red > green ? 'Red leads' : green > red ? 'Green leads' : 'Tied';
 
     // Cities & countries
     const cityNames = data.map(r => normalizeCity(r.city)).filter(Boolean);
@@ -814,24 +808,33 @@
       .filter(([,v]) => v === maxFreq)
       .map(([k]) => wines.find(w => w.toLowerCase() === k) || k);
 
+    function pill(t) { return `<span class="stat-pill">${esc(String(t))}</span>`; }
+
     document.getElementById('statTotal').textContent = n;
     document.getElementById('statAvg').textContent = avg;
     document.getElementById('statTop').textContent = top;
-    document.getElementById('statSplit').textContent = `${ip} in person · ${rm} remote`;
+    document.getElementById('statSplit').innerHTML = pill(`${ip} in person`) + pill(`${rm} remote`);
     const grapeWinnerLabel = red > green ? 'Red' : green > red ? 'Green' : 'Tied';
     const grapeEl = document.getElementById('statGrapeWinner');
     grapeEl.textContent = grapeWinnerLabel;
-    grapeEl.style.color = grapeWinnerLabel === 'Red' ? '#c0392b' : grapeWinnerLabel === 'Green' ? '#27ae60' : '#d95c88';
-    document.getElementById('statGrapeSub').textContent = `${red} Red · ${green} Green`;
-    document.getElementById('statCities').textContent = uniqueCities;
-    document.getElementById('statCountries').textContent = uniqueCountries;
-    document.getElementById('statWines').textContent = uniqueWines;
+    document.getElementById('statGrapeSub').innerHTML = pill(`${red} Red`) + pill(`${green} Green`);
 
+    // Geography: cities as main value, countries + top city as pills
+    const cityFreq = {};
+    cityNames.forEach(c => { cityFreq[c] = (cityFreq[c] || 0) + 1; });
+    const maxCityFreq = cityNames.length ? Math.max(...Object.values(cityFreq)) : 0;
+    const topCity = maxCityFreq ? Object.entries(cityFreq).find(([,v]) => v === maxCityFreq)?.[0] : null;
+    document.getElementById('statCities').textContent = uniqueCities;
+    document.getElementById('statGeographySub').innerHTML =
+      pill(`${uniqueCountries} countr${uniqueCountries === 1 ? 'y' : 'ies'}`) +
+      (topCity ? pill(`★ ${topCity}`) : '');
+
+    document.getElementById('statWines').textContent = uniqueWines;
     const wineSubEl = document.getElementById('statWinesSub');
     if (topWines.length > 1) {
-      wineSubEl.textContent = `${maxFreq}-way tie: ${topWines.join(', ')}`;
+      wineSubEl.innerHTML = pill(`${maxFreq}-way tie`) + topWines.map(w => pill(w)).join('');
     } else if (topWines.length === 1) {
-      wineSubEl.textContent = `Most common: ${topWines[0]}`;
+      wineSubEl.innerHTML = pill(`★ ${topWines[0]}`);
     }
   }
 
