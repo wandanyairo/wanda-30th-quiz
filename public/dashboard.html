@@ -6,7 +6,7 @@
   <title>WWWT 2026 · Results Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -94,7 +94,7 @@
     .section-label {
       font-size: 1.35rem;
       font-family: 'Playfair Display', Georgia, serif;
-      font-weight: 400;
+      font-weight: 700;
       letter-spacing: 0;
       color: #956878;
       margin-bottom: 0.8rem;
@@ -164,12 +164,11 @@
 
     .info-icon {
       position: relative;
-      display: inline-flex;
-      align-items: center;
+      display: inline;
       cursor: help;
       font-size: 0.85rem;
       color: #956878;
-      vertical-align: middle;
+      vertical-align: baseline;
       margin-left: 0.35rem;
     }
     .info-icon::after {
@@ -178,7 +177,7 @@
       left: 1.4rem;
       top: 50%;
       transform: translateY(-50%);
-      background: #2e1b22;
+      background: #f0a356;
       color: #fff;
       padding: 0.3em 0.65em;
       border-radius: 6px;
@@ -508,7 +507,12 @@
           <div class="stat-sub" id="statSplit"></div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Avg Score</div>
+          <div class="stat-label">Cities</div>
+          <div class="stat-value" id="statCities">—</div>
+          <div class="stat-sub" id="statGeographySub"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Average Score</div>
           <div class="stat-value" id="statAvg">—</div>
         </div>
         <div class="stat-card">
@@ -519,11 +523,6 @@
           <div class="stat-label">Grape Debate</div>
           <div class="stat-value" id="statGrapeWinner">—</div>
           <div class="stat-sub" id="statGrapeSub"></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Cities</div>
-          <div class="stat-value" id="statCities">—</div>
-          <div class="stat-sub" id="statGeographySub"></div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Wine Identities</div>
@@ -810,7 +809,7 @@
   function renderStats(data) {
     const n = data.length;
     const scores = data.map(r => r.score ?? 0);
-    const avg = n ? Math.round(scores.reduce((a,b) => a+b, 0) / n) : '—';
+    const avg = n ? (scores.reduce((a,b) => a+b, 0) / n).toFixed(1) : '—';
     const top = n ? Math.max(...scores) : '—';
     const ip = data.filter(r => isInPerson(r.attendance)).length;
     const rm = data.filter(r => /^remote$/i.test((r.attendance || '').trim())).length;
