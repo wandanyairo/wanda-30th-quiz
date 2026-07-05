@@ -100,9 +100,17 @@
       margin-bottom: 0.8rem;
     }
 
+    .overview-wrap {
+      background: linear-gradient(135deg, #fce8ef 0%, #fef4e8 100%);
+      border: 1.5px solid #e4c4d2;
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+    .overview-wrap .section-label { color: #bf4070; margin-bottom: 1rem; }
+
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 0.875rem;
     }
 
@@ -124,7 +132,7 @@
     }
 
     .stat-value {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 800;
       color: #d95c88;
       line-height: 1;
@@ -137,6 +145,68 @@
       margin-top: 0.4rem;
       line-height: 1.4;
     }
+
+    .stat-pair {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-end;
+    }
+    .stat-pair-item { flex: 1; }
+    .stat-pair-micro {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #b89aa4;
+      margin-top: 0.2rem;
+    }
+
+    /* Glass image modal */
+    .glass-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.78);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 1.5rem;
+      cursor: pointer;
+    }
+    .glass-modal-img {
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #fff;
+      cursor: default;
+    }
+    .glass-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 2.2rem;
+      height: 2.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2e1b22;
+      line-height: 1;
+    }
+    .glass-modal-close:hover { background: #f0dde6; }
+    .glass-link {
+      cursor: zoom-in;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+      color: inherit;
+    }
+    .glass-link:hover { color: #d95c88; }
 
     /* Leaderboard */
     .leaderboard-grid {
@@ -367,6 +437,7 @@
 
     @media (max-width: 720px) {
       .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .stat-value { font-size: 1.8rem; }
       .leaderboard-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
@@ -396,41 +467,45 @@
 <main class="main">
 
   <section>
-    <div class="section-label">Overview</div>
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-label">Responses</div>
-        <div class="stat-value" id="statTotal">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Avg Score</div>
-        <div class="stat-value" id="statAvg">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Top Score</div>
-        <div class="stat-value" id="statTop">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">In Person / Remote</div>
-        <div class="stat-value" id="statSplit">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Grape Debate</div>
-        <div class="stat-value" id="statGrape">—</div>
-        <div class="stat-sub" id="statGrapeSub"></div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Cities</div>
-        <div class="stat-value" id="statCities">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Countries</div>
-        <div class="stat-value" id="statCountries">—</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Wine Identities</div>
-        <div class="stat-value" id="statWines">—</div>
-        <div class="stat-sub" id="statWinesSub"></div>
+    <div class="overview-wrap">
+      <div class="section-label">Overview</div>
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Participants</div>
+          <div class="stat-value" id="statTotal">—</div>
+          <div class="stat-sub" id="statSplit"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg Score</div>
+          <div class="stat-value" id="statAvg">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Top Score</div>
+          <div class="stat-value" id="statTop">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Grape Debate</div>
+          <div class="stat-value" id="statGrapeWinner" style="font-size:2rem">—</div>
+          <div class="stat-sub" id="statGrapeSub"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cities · Countries</div>
+          <div class="stat-pair">
+            <div class="stat-pair-item">
+              <div class="stat-value" id="statCities">—</div>
+              <div class="stat-pair-micro">cities</div>
+            </div>
+            <div class="stat-pair-item">
+              <div class="stat-value" id="statCountries">—</div>
+              <div class="stat-pair-micro">countries</div>
+            </div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Wine Identities</div>
+          <div class="stat-value" id="statWines">—</div>
+          <div class="stat-sub" id="statWinesSub"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -489,6 +564,11 @@
     </div>
   </section>
 
+  <div id="glassModal" class="glass-modal-overlay" style="display:none" onclick="closeGlassModal()">
+    <button class="glass-modal-close" onclick="event.stopPropagation();closeGlassModal()" aria-label="Close">✕</button>
+    <img id="glassModalImg" class="glass-modal-img" src="" alt="" onclick="event.stopPropagation()">
+  </div>
+
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -520,7 +600,7 @@
     'feta': 'Feta',
     'parmesan': 'Parmesan',
     'brie': 'Brie',
-    'gruyere': 'Gruère',
+    'gruyere': 'Gruyère',
     'cheddar': 'Cheddar'
   };
 
@@ -644,10 +724,25 @@
     ).join('');
   }
 
+  function openGlassModal(src) {
+    document.getElementById('glassModalImg').src = src;
+    document.getElementById('glassModal').style.display = 'flex';
+  }
+  function closeGlassModal() {
+    document.getElementById('glassModal').style.display = 'none';
+    document.getElementById('glassModalImg').src = '';
+  }
+
   function renderAnswersCard() {
     const el = document.getElementById('answersCard');
     if (!el) return;
     const c = CORRECT_ANSWERS;
+    function fmtRankGlass(arr, labels) {
+      if (!arr || !arr.length) return '<span class="cell-muted">—</span>';
+      return arr.map((k, i) =>
+        `<div class="rank-item"><span class="rank-num">${i + 1}</span><span class="glass-link" onclick="openGlassModal('/glasses/${k}.png')">${esc(labels[k] || k)}</span></div>`
+      ).join('');
+    }
     el.innerHTML = `<table>
       <thead><tr>
         <th>Fave Fruit</th>
@@ -658,7 +753,7 @@
       </tr></thead>
       <tbody><tr>
         <td>${esc(c.favourite_fruit || '—')}</td>
-        <td>${fmtRank(c.rank_glasses, GLASS_LABELS)}</td>
+        <td>${fmtRankGlass(c.rank_glasses, GLASS_LABELS)}</td>
         <td>${fmtRank(c.rank_wines,   WINE_LABELS)}</td>
         <td>${fmtRank(c.rank_cheeses, CHEESE_LABELS)}</td>
         <td>${esc(c.veggie || '—')}</td>
@@ -695,18 +790,14 @@
     const ip = data.filter(r => isInPerson(r.attendance)).length;
     const rm = data.filter(r => /^remote$/i.test((r.attendance || '').trim())).length;
 
-    // Grape debate
     const red   = data.filter(r => (r.grape_debate || {}).choice === 'Red').length;
     const green = data.filter(r => (r.grape_debate || {}).choice === 'Green').length;
-    const grapeWinner = red > green ? 'Red leads' : green > red ? 'Green leads' : 'Tied';
 
-    // Cities & countries
     const cityNames = data.map(r => normalizeCity(r.city)).filter(Boolean);
     const uniqueCities = new Set(cityNames).size;
     const countries = new Set(data.map(r => inferCountry(r.city)).filter(Boolean));
     const uniqueCountries = countries.size;
 
-    // Wine self-identification (exclude non-answers)
     const wines = data
       .map(r => (r.wine_self || {}).wine)
       .filter(w => w && !/idk|don't know|sparkling water/i.test(w));
@@ -721,9 +812,12 @@
     document.getElementById('statTotal').textContent = n;
     document.getElementById('statAvg').textContent = avg;
     document.getElementById('statTop').textContent = top;
-    document.getElementById('statSplit').textContent = `${ip} / ${rm}`;
-    document.getElementById('statGrape').textContent = `${red} · ${green}`;
-    document.getElementById('statGrapeSub').textContent = `Red · Green · ${grapeWinner}`;
+    document.getElementById('statSplit').textContent = `${ip} in person · ${rm} remote`;
+    const grapeWinnerLabel = red > green ? 'Red' : green > red ? 'Green' : 'Tied';
+    const grapeEl = document.getElementById('statGrapeWinner');
+    grapeEl.textContent = grapeWinnerLabel;
+    grapeEl.style.color = grapeWinnerLabel === 'Red' ? '#c0392b' : grapeWinnerLabel === 'Green' ? '#27ae60' : '#d95c88';
+    document.getElementById('statGrapeSub').textContent = `${red} Red · ${green} Green`;
     document.getElementById('statCities').textContent = uniqueCities;
     document.getElementById('statCountries').textContent = uniqueCountries;
     document.getElementById('statWines').textContent = uniqueWines;
