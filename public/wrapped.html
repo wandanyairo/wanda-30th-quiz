@@ -39,6 +39,16 @@
       letter-spacing: 0.15em; text-transform: uppercase;
     }
 
+    /* Pause overlay */
+    #pauseOverlay {
+      position: fixed; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.18);
+      z-index: 45; pointer-events: none;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    #pauseOverlay span { font-size: 2.8rem; opacity: 0.55; }
+
     /* Progress bar */
     #progressBar {
       position: fixed; top: 0; left: 0; right: 0;
@@ -71,21 +81,23 @@
     }
     .slide--active { opacity: 1; pointer-events: auto; }
 
-    /* Slide backgrounds */
+    /* Slide backgrounds — all warm-tinted darks */
     .slide-opener  { background: linear-gradient(160deg, #1a0510 0%, #2d0f1e 50%, #1a0d12 100%); }
-    .slide-turnout { background: linear-gradient(160deg, #0d1a2e 0%, #1a2d4a 100%); }
-    .slide-scores  { background: linear-gradient(160deg, #130d25 0%, #2d1845 100%); }
+    .slide-turnout { background: linear-gradient(160deg, #1a0d1a 0%, #2a1428 100%); }
+    .slide-scores  { background: linear-gradient(160deg, #1a0a14 0%, #2d1228 100%); }
     .slide-grape   { background: linear-gradient(160deg, #0d1205 0%, #1a200a 100%); }
-    .slide-cities  { background: linear-gradient(160deg, #05141a 0%, #0a2430 100%); }
+    .slide-cities  { background: linear-gradient(160deg, #0f0a1a 0%, #1e1030 100%); }
     .slide-wines   { background: linear-gradient(160deg, #1a0510 0%, #300d22 100%); }
-    .slide-scam    { background: linear-gradient(160deg, #1a0e05 0%, #2e1a08 100%); }
+    .slide-scam    { background: linear-gradient(160deg, #1a0d05 0%, #2e1808 100%); }
     .slide-advice  { background: linear-gradient(160deg, #140510 0%, #280d22 100%); }
+    .slide-lb-ip   { background: linear-gradient(160deg, #1a0818 0%, #2d0f28 100%); }
+    .slide-lb-rm   { background: linear-gradient(160deg, #0a0d1a 0%, #141828 100%); }
     .slide-closer  { background: radial-gradient(ellipse at center, #3d1530 0%, #0d0608 70%); }
 
     /* Decorative blobs */
     .blob {
       position: absolute; border-radius: 50%;
-      filter: blur(90px); opacity: 0.2; pointer-events: none;
+      filter: blur(90px); opacity: 0.28; pointer-events: none;
     }
 
     /* Typography */
@@ -215,13 +227,55 @@
     }
     .quote-card {
       background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.12);
       border-radius: 10px; padding: 0.85rem 1rem; text-align: left;
     }
     .quote-text {
       font-size: clamp(0.8rem, 2vw, 0.9rem); font-weight: 500;
       color: rgba(255,255,255,0.82); line-height: 1.55;
       font-style: italic;
+    }
+
+    /* Leaderboard podium */
+    .lb-podium {
+      display: flex; flex-direction: column; gap: 0.7rem;
+      width: min(440px, 88vw); margin-top: 1.25rem;
+    }
+    .lb-row {
+      display: flex; align-items: center; gap: 0.9rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.11);
+      border-radius: 14px; padding: 0.8rem 1.1rem;
+      text-align: left;
+    }
+    .lb-row--gold {
+      background: rgba(240,163,86,0.14);
+      border-color: rgba(240,163,86,0.3);
+    }
+    .lb-medal { font-size: 1.9rem; flex-shrink: 0; line-height: 1; }
+    .lb-info  { flex: 1; min-width: 0; }
+    .lb-name  {
+      font-size: clamp(0.95rem, 2.8vw, 1.15rem); font-weight: 800;
+      color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .lb-city  {
+      font-size: 0.7rem; font-weight: 600;
+      color: rgba(255,255,255,0.38); margin-top: 0.1rem;
+    }
+    .lb-score {
+      font-size: 1.65rem; font-weight: 900; flex-shrink: 0;
+      background: linear-gradient(135deg, #d95c88, #f0a356);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-variant-numeric: tabular-nums; line-height: 1;
+    }
+    .lb-score-denom {
+      font-size: 0.62rem; font-weight: 700;
+      color: rgba(255,255,255,0.28); display: block;
+      text-align: right; margin-top: 0.1rem;
+    }
+    .lb-empty {
+      font-size: 0.85rem; font-style: italic;
+      color: rgba(255,255,255,0.3); margin-top: 1rem;
     }
 
     /* Navigation tap zones */
@@ -262,10 +316,10 @@
     .slide--active .a-scale { animation: scaleIn  0.5s cubic-bezier(0.22,1,0.36,1) both; }
 
     .d1 { animation-delay: 0.06s; }
-    .d2 { animation-delay: 0.18s; }
-    .d3 { animation-delay: 0.32s; }
-    .d4 { animation-delay: 0.46s; }
-    .d5 { animation-delay: 0.6s; }
+    .d2 { animation-delay: 0.2s; }
+    .d3 { animation-delay: 0.36s; }
+    .d4 { animation-delay: 0.52s; }
+    .d5 { animation-delay: 0.68s; }
 
     @media (max-width: 480px) {
       .slide { padding: 4rem 1.25rem 2.5rem; }
@@ -281,17 +335,18 @@
   <div class="loading-sub">Wanda's Wine Quiz · 2026</div>
 </div>
 
+<div id="pauseOverlay"><span>⏸</span></div>
 <div id="progressBar"></div>
-<div id="navLeft"  onclick="navigate(-1)"></div>
-<div id="navRight" onclick="navigate(1)"></div>
-<div id="tapHint">Tap to advance ›</div>
+<div id="navLeft"  onclick="navClick(-1)"></div>
+<div id="navRight" onclick="navClick(1)"></div>
+<div id="tapHint">Tap to advance · Hold to pause</div>
 
 <div id="slidesContainer">
 
   <!-- 0: Opener -->
   <div class="slide slide-opener" id="slide-0">
-    <div class="blob" style="width:500px;height:500px;background:#d95c88;top:-180px;right:-180px;"></div>
-    <div class="blob" style="width:300px;height:300px;background:#f0a356;bottom:-80px;left:-100px;"></div>
+    <div class="blob" style="width:520px;height:520px;background:#d95c88;top:-200px;right:-180px;"></div>
+    <div class="blob" style="width:320px;height:320px;background:#f0a356;bottom:-80px;left:-100px;"></div>
     <div class="eyebrow a-fade">Wanda's Worldwide Wine Tours™ · The Quiz</div>
     <div class="headline headline--gradient a-up d1" style="font-size:clamp(3.5rem,13vw,7.5rem);margin-bottom:0.5rem;">Quiz<br>Wrapped</div>
     <div class="subtext a-up d2">2026 · The results are in 🍷</div>
@@ -299,19 +354,21 @@
 
   <!-- 1: Turnout -->
   <div class="slide slide-turnout" id="slide-1">
-    <div class="blob" style="width:450px;height:450px;background:#1d4ed8;bottom:-120px;right:-120px;"></div>
+    <div class="blob" style="width:460px;height:460px;background:#d95c88;top:-160px;right:-140px;"></div>
+    <div class="blob" style="width:280px;height:280px;background:#f0a356;bottom:-80px;left:-80px;opacity:0.2;"></div>
     <div class="eyebrow a-fade">The people showed up</div>
     <div class="big-num a-scale d1" id="wTotal">—</div>
     <div class="big-label a-fade d2">players</div>
     <div class="pill-row a-up d3">
-      <span class="pill pill--accent" id="wIPill">— in person</span>
-      <span class="pill" id="wRPill">— remote</span>
+      <span class="pill pill--pink" id="wIPill">— in person</span>
+      <span class="pill pill--accent" id="wRPill">— remote</span>
     </div>
   </div>
 
   <!-- 2: Scores -->
   <div class="slide slide-scores" id="slide-2">
-    <div class="blob" style="width:420px;height:420px;background:#6d28d9;bottom:-100px;left:-130px;"></div>
+    <div class="blob" style="width:400px;height:400px;background:#f0a356;bottom:-120px;left:-120px;"></div>
+    <div class="blob" style="width:300px;height:300px;background:#d95c88;top:-100px;right:-80px;opacity:0.22;"></div>
     <div class="eyebrow a-fade">How did we do?</div>
     <div class="stat-pair a-up d1">
       <div class="stat-pair-item">
@@ -330,6 +387,7 @@
   <!-- 3: Grape Debate -->
   <div class="slide slide-grape" id="slide-3">
     <div class="blob" id="grapeBlob" style="width:420px;height:420px;top:-120px;right:-120px;"></div>
+    <div class="blob" style="width:220px;height:220px;background:#f0a356;bottom:-60px;left:-60px;opacity:0.18;"></div>
     <div class="eyebrow a-fade">The great grape debate 🍇</div>
     <div class="headline a-up d1" id="wGrapeWinner" style="font-size:clamp(3rem,10vw,6.5rem);">—</div>
     <div class="subtext a-fade d2" id="wGrapeSub">grapes take the crown</div>
@@ -347,7 +405,8 @@
 
   <!-- 4: Cities -->
   <div class="slide slide-cities" id="slide-4">
-    <div class="blob" style="width:400px;height:400px;background:#0e7490;top:-140px;left:-100px;"></div>
+    <div class="blob" style="width:380px;height:380px;background:#d95c88;top:-130px;left:-80px;"></div>
+    <div class="blob" style="width:280px;height:280px;background:#f0a356;bottom:-80px;right:-60px;opacity:0.2;"></div>
     <div class="eyebrow a-fade">Representing 🌍</div>
     <div class="big-num a-scale d1" id="wCities">—</div>
     <div class="big-label a-fade d2">cities worldwide</div>
@@ -357,7 +416,8 @@
 
   <!-- 5: Wine Personalities -->
   <div class="slide slide-wines" id="slide-5">
-    <div class="blob" style="width:420px;height:420px;background:#9d174d;bottom:-140px;right:-100px;"></div>
+    <div class="blob" style="width:420px;height:420px;background:#d95c88;bottom:-150px;right:-100px;"></div>
+    <div class="blob" style="width:200px;height:200px;background:#f0a356;top:-60px;left:-60px;opacity:0.22;"></div>
     <div class="eyebrow a-fade">If you were a wine...</div>
     <div class="headline a-up d1" style="font-size:clamp(1.8rem,5vw,3.2rem);">The group's<br>wine identities</div>
     <div class="wine-bars a-up d2" id="wWineBars"></div>
@@ -365,7 +425,8 @@
 
   <!-- 6: Scamfluencer -->
   <div class="slide slide-scam" id="slide-6">
-    <div class="blob" style="width:400px;height:400px;background:#b45309;top:-100px;right:-140px;"></div>
+    <div class="blob" style="width:400px;height:400px;background:#f0a356;top:-100px;right:-140px;"></div>
+    <div class="blob" style="width:240px;height:240px;background:#d95c88;bottom:-60px;left:-60px;opacity:0.22;"></div>
     <div class="eyebrow a-fade">Everyone's inner scammer 🤑</div>
     <div class="headline a-up d1" style="font-size:clamp(1.7rem,5vw,3rem);">The scams<br>we'd run</div>
     <div class="quote-stack a-up d2" id="wScamQuotes"></div>
@@ -373,15 +434,35 @@
 
   <!-- 7: Advice -->
   <div class="slide slide-advice" id="slide-7">
-    <div class="blob" style="width:420px;height:420px;background:#be185d;bottom:-100px;left:-140px;"></div>
+    <div class="blob" style="width:420px;height:420px;background:#d95c88;bottom:-100px;left:-140px;"></div>
+    <div class="blob" style="width:220px;height:220px;background:#f0a356;top:-60px;right:-60px;opacity:0.2;"></div>
     <div class="eyebrow a-fade">Words of wisdom 🎂</div>
     <div class="headline a-up d1" style="font-size:clamp(1.7rem,5vw,3rem);">Advice for<br>Wanda at 30</div>
     <div class="quote-stack a-up d2" id="wAdviceQuotes"></div>
   </div>
 
-  <!-- 8: Closer -->
-  <div class="slide slide-closer" id="slide-8">
-    <div class="blob" style="width:700px;height:700px;background:#d95c88;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.12;filter:blur(130px);"></div>
+  <!-- 8: Leaderboard — In Person -->
+  <div class="slide slide-lb-ip" id="slide-8">
+    <div class="blob" style="width:500px;height:500px;background:#d95c88;top:-160px;right:-160px;"></div>
+    <div class="blob" style="width:280px;height:280px;background:#f0a356;bottom:-80px;left:-80px;opacity:0.22;"></div>
+    <div class="eyebrow a-fade">And the winners are... 🏆</div>
+    <div class="headline a-up d1" style="font-size:clamp(1.8rem,5.5vw,3.5rem);">In Person<br><span style="font-size:0.65em;opacity:0.6;">🗽 NYC Soirée</span></div>
+    <div class="lb-podium" id="wLbIP"></div>
+  </div>
+
+  <!-- 9: Leaderboard — Remote -->
+  <div class="slide slide-lb-rm" id="slide-9">
+    <div class="blob" style="width:500px;height:500px;background:#f0a356;top:-160px;left:-160px;"></div>
+    <div class="blob" style="width:280px;height:280px;background:#d95c88;bottom:-80px;right:-80px;opacity:0.22;"></div>
+    <div class="eyebrow a-fade">Joining from around the world 🌍</div>
+    <div class="headline a-up d1" style="font-size:clamp(1.8rem,5.5vw,3.5rem);">Remote<br><span style="font-size:0.65em;opacity:0.6;">🌐 The Global Squad</span></div>
+    <div class="lb-podium" id="wLbRM"></div>
+  </div>
+
+  <!-- 10: Closer -->
+  <div class="slide slide-closer" id="slide-10">
+    <div class="blob" style="width:700px;height:700px;background:#d95c88;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.15;filter:blur(130px);"></div>
+    <div class="blob" style="width:300px;height:300px;background:#f0a356;bottom:-60px;right:-60px;opacity:0.18;"></div>
     <div class="eyebrow a-fade">From all of us 🥂</div>
     <div class="headline headline--gradient a-scale d1" style="font-size:clamp(3rem,11vw,6.5rem);">Happy<br>Birthday<br>Wanda</div>
     <div class="subtext a-up d2" style="margin-top:1rem;">Here's to your thirties 🎂✨🍷</div>
@@ -397,11 +478,136 @@
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0ZmpwYnB0eWtteXJwcnhia29yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3Nzg4NzIsImV4cCI6MjA5ODM1NDg3Mn0.l17KUmut5xJMWWHapRd_sHfSg6KMyUDO8iQGT5Zg-tc'
   );
 
-  const TOTAL_SLIDES = 9;
-  const SLIDE_MS = 5000;
+  const TOTAL_SLIDES = 11;
+  const SLIDE_MS = 6000;
   let cur = 0;
   let autoTimer = null;
+  let slideStartTime = 0;
+  let remainingMs = SLIDE_MS;
 
+  // ── Hold-to-pause ──────────────────────────────────────
+  let holdPaused = false;
+  let holdTimer  = null;
+  let wasHeld    = false;
+
+  const slidesContainer = document.getElementById('slidesContainer');
+  const pauseOverlay    = document.getElementById('pauseOverlay');
+
+  slidesContainer.addEventListener('pointerdown', () => {
+    holdTimer = setTimeout(() => {
+      wasHeld = true;
+      holdPaused = true;
+      pauseSlide();
+    }, 200);
+  });
+  slidesContainer.addEventListener('pointerup', () => {
+    clearTimeout(holdTimer);
+    if (holdPaused) { holdPaused = false; resumeSlide(); }
+  });
+  slidesContainer.addEventListener('pointercancel', () => {
+    clearTimeout(holdTimer);
+    if (holdPaused) { holdPaused = false; resumeSlide(); }
+  });
+
+  function pauseSlide() {
+    clearTimeout(autoTimer);
+    const elapsed = Date.now() - slideStartTime;
+    remainingMs = Math.max(200, SLIDE_MS - elapsed);
+    const pct = ((SLIDE_MS - remainingMs) / SLIDE_MS * 100).toFixed(2);
+    const fill = document.getElementById(`segf-${cur}`);
+    if (fill) { fill.style.transition = 'none'; fill.style.width = pct + '%'; }
+    pauseOverlay.style.opacity = '1';
+  }
+
+  function resumeSlide() {
+    const fill = document.getElementById(`segf-${cur}`);
+    if (fill) {
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        fill.style.transition = `width ${remainingMs}ms linear`;
+        fill.style.width = '100%';
+      }));
+    }
+    slideStartTime = Date.now() - (SLIDE_MS - remainingMs);
+    if (cur < TOTAL_SLIDES - 1) autoTimer = setTimeout(() => showSlide(cur + 1), remainingMs);
+    pauseOverlay.style.opacity = '0';
+  }
+
+  function navClick(dir) {
+    if (wasHeld) { wasHeld = false; return; }
+    clearTimeout(holdTimer);
+    navigate(dir);
+  }
+
+  // ── Progress bar ───────────────────────────────────────
+  function buildProgressBar() {
+    const bar = document.getElementById('progressBar');
+    bar.innerHTML = Array.from({ length: TOTAL_SLIDES }, (_, i) =>
+      `<div class="progress-seg" id="seg-${i}"><div class="progress-seg-fill" id="segf-${i}"></div></div>`
+    ).join('');
+  }
+
+  function updateProgress(idx) {
+    slideStartTime = Date.now();
+    remainingMs = SLIDE_MS;
+    for (let i = 0; i < TOTAL_SLIDES; i++) {
+      const seg  = document.getElementById(`seg-${i}`);
+      const fill = document.getElementById(`segf-${i}`);
+      seg.classList.remove('progress-seg--done');
+      fill.style.transition = 'none';
+      fill.style.width = '0%';
+      if (i < idx) {
+        seg.classList.add('progress-seg--done');
+      } else if (i === idx) {
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          fill.style.transition = `width ${SLIDE_MS}ms linear`;
+          fill.style.width = '100%';
+        }));
+      }
+    }
+  }
+
+  // ── Navigation ─────────────────────────────────────────
+  let grapeRedPct  = 50;
+  let wineBarsData = [];
+
+  function showSlide(idx) {
+    idx = Math.max(0, Math.min(TOTAL_SLIDES - 1, idx));
+    const prev = document.getElementById(`slide-${cur}`);
+    if (prev) prev.classList.remove('slide--active');
+    cur = idx;
+    const next = document.getElementById(`slide-${cur}`);
+    if (next) { next.classList.remove('slide--active'); void next.offsetWidth; next.classList.add('slide--active'); }
+    updateProgress(cur);
+    clearTimeout(autoTimer);
+    if (cur < TOTAL_SLIDES - 1) autoTimer = setTimeout(() => showSlide(cur + 1), SLIDE_MS);
+    if (cur === 3) setTimeout(triggerGrapeBars, 450);
+    if (cur === 5) setTimeout(triggerWineBars, 450);
+    if (cur >= 2) document.getElementById('tapHint').style.opacity = '0';
+  }
+
+  function navigate(dir) { clearTimeout(autoTimer); showSlide(cur + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') navigate(1);
+    if (e.key === 'ArrowLeft') navigate(-1);
+  });
+
+  // ── Deferred bar animations ────────────────────────────
+  function triggerGrapeBars() {
+    const red = document.getElementById('wRedBar');
+    const grn = document.getElementById('wGreenBar');
+    if (red) { red.style.transition = ''; red.style.width = grapeRedPct + '%'; }
+    if (grn) { grn.style.transition = ''; grn.style.width = (100 - grapeRedPct) + '%'; }
+  }
+
+  function triggerWineBars() {
+    wineBarsData.forEach(({ id, pct }) => {
+      const el = document.getElementById(`wf-${id}`);
+      if (el) el.style.width = pct + '%';
+    });
+  }
+
+  // ── Utilities ──────────────────────────────────────────
   function isInPerson(raw) { return /^in\s*person$/i.test((raw||'').trim()); }
 
   function normalizeCity(raw) {
@@ -438,84 +644,56 @@
     return a;
   }
 
-  function buildProgressBar() {
-    const bar = document.getElementById('progressBar');
-    bar.innerHTML = Array.from({ length: TOTAL_SLIDES }, (_, i) =>
-      `<div class="progress-seg" id="seg-${i}"><div class="progress-seg-fill" id="segf-${i}"></div></div>`
-    ).join('');
+  function getTopN(entries, n) {
+    return [...entries]
+      .sort((a, b) => (b.score ?? 0) - (a.score ?? 0) || new Date(a.submitted_at) - new Date(b.submitted_at))
+      .slice(0, n);
   }
 
-  function updateProgress(idx) {
-    for (let i = 0; i < TOTAL_SLIDES; i++) {
-      const seg  = document.getElementById(`seg-${i}`);
-      const fill = document.getElementById(`segf-${i}`);
-      seg.classList.remove('progress-seg--done');
-      fill.style.transition = 'none';
-      fill.style.width = '0%';
-      if (i < idx) {
-        seg.classList.add('progress-seg--done');
-      } else if (i === idx) {
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          fill.style.transition = `width ${SLIDE_MS}ms linear`;
-          fill.style.width = '100%';
-        }));
-      }
+  const MEDALS = ['🥇', '🥈', '🥉'];
+
+  function renderPodium(entries, containerId) {
+    const el = document.getElementById(containerId);
+    if (!entries.length) {
+      el.innerHTML = '<div class="lb-empty">No entries yet</div>';
+      return;
     }
+    el.innerHTML = entries.map((e, i) => {
+      const city = normalizeCity(e.city);
+      const isGold = i === 0;
+      return `<div class="lb-row${isGold ? ' lb-row--gold' : ''} a-up d${i + 2}">
+        <div class="lb-medal">${MEDALS[i] || '🎖️'}</div>
+        <div class="lb-info">
+          <div class="lb-name">${esc(e.nickname || 'Anonymous')}</div>
+          ${city ? `<div class="lb-city">${esc(titleCase(city))}</div>` : ''}
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div class="lb-score">${e.score ?? '—'}</div>
+          <span class="lb-score-denom">/18</span>
+        </div>
+      </div>`;
+    }).join('');
   }
 
-  let grapeRedPct = 50;
-  let wineBarsData = [];
-
-  function showSlide(idx) {
-    idx = Math.max(0, Math.min(TOTAL_SLIDES - 1, idx));
-    const prev = document.getElementById(`slide-${cur}`);
-    if (prev) prev.classList.remove('slide--active');
-    cur = idx;
-    const next = document.getElementById(`slide-${cur}`);
-    if (next) { next.classList.remove('slide--active'); void next.offsetWidth; next.classList.add('slide--active'); }
-    updateProgress(cur);
-    clearTimeout(autoTimer);
-    if (cur < TOTAL_SLIDES - 1) autoTimer = setTimeout(() => showSlide(cur + 1), SLIDE_MS);
-    if (cur === 3) setTimeout(triggerGrapeBars, 450);
-    if (cur === 5) setTimeout(triggerWineBars, 450);
-    if (cur >= 2) document.getElementById('tapHint').style.opacity = '0';
-  }
-
-  function navigate(dir) { clearTimeout(autoTimer); showSlide(cur + dir); }
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === ' ') navigate(1);
-    if (e.key === 'ArrowLeft') navigate(-1);
-  });
-
-  function triggerGrapeBars() {
-    const red = document.getElementById('wRedBar');
-    const grn = document.getElementById('wGreenBar');
-    if (red) { red.style.transition = ''; red.style.width = grapeRedPct + '%'; }
-    if (grn) { grn.style.transition = ''; grn.style.width = (100 - grapeRedPct) + '%'; }
-  }
-
-  function triggerWineBars() {
-    wineBarsData.forEach(({ id, pct }) => {
-      const el = document.getElementById(`wf-${id}`);
-      if (el) el.style.width = pct + '%';
-    });
-  }
-
+  // ── Data population ────────────────────────────────────
   function populate(data) {
-    const n = data.length;
+    const n  = data.length;
     const ip = data.filter(r => isInPerson(r.attendance)).length;
     const rm = n - ip;
     const scores = data.map(r => r.score ?? 0);
     const avg = n ? (scores.reduce((a,b) => a+b,0) / n).toFixed(1) : '—';
     const top = n ? Math.max(...scores) : '—';
 
+    // Slide 1
     document.getElementById('wTotal').textContent = n;
     document.getElementById('wIPill').textContent = `${ip} in person`;
     document.getElementById('wRPill').textContent = `${rm} remote`;
+
+    // Slide 2
     document.getElementById('wAvg').textContent = avg;
     document.getElementById('wTop').textContent = top;
 
+    // Slide 3 — Grape debate
     const red   = data.filter(r => (r.grape_debate||{}).choice === 'Red').length;
     const green = data.filter(r => (r.grape_debate||{}).choice === 'Green').length;
     const gtotal = (red + green) || 1;
@@ -546,6 +724,7 @@
       if (el) { el.style.transition = 'none'; el.style.width = '0%'; }
     });
 
+    // Slide 4 — Cities
     const cityNames = data.map(r => normalizeCity(r.city)).filter(Boolean);
     const uniqueCities = new Set(cityNames).size;
     const countries = [...new Set(data.map(r => inferCountry(r.city)).filter(Boolean))];
@@ -562,6 +741,7 @@
         `<div class="city-row"><span class="city-name">${esc(city)}</span><span class="city-count">${count} player${count!==1?'s':''}</span></div>`
       ).join('');
 
+    // Slide 5 — Wine identities
     const wines = data
       .map(r => (r.wine_self||{}).wine)
       .filter(w => w && !/idk|don.t know|sparkling water/i.test(w));
@@ -578,17 +758,26 @@
       </div>`
     ).join('');
 
+    // Slide 6 — Scamfluencer
     const scams = shuffle(data.map(r => r.scamfluencer).filter(s => s && s.trim().length > 8)).slice(0, 3);
     document.getElementById('wScamQuotes').innerHTML = scams.length
       ? scams.map(s => `<div class="quote-card"><div class="quote-text">"${esc(s.trim())}"</div></div>`).join('')
       : '<div class="quote-card"><div class="quote-text" style="opacity:0.45">No responses yet</div></div>';
 
+    // Slide 7 — Advice
     const advices = shuffle(data.map(r => r.advice).filter(a => a && a.trim().length > 8)).slice(0, 3);
     document.getElementById('wAdviceQuotes').innerHTML = advices.length
       ? advices.map(a => `<div class="quote-card"><div class="quote-text">"${esc(a.trim())}"</div></div>`).join('')
       : '<div class="quote-card"><div class="quote-text" style="opacity:0.45">No responses yet</div></div>';
+
+    // Slides 8 & 9 — Leaderboards
+    const ipEntries = getTopN(data.filter(r => isInPerson(r.attendance)), 3);
+    const rmEntries = getTopN(data.filter(r => /^remote$/i.test((r.attendance||'').trim())), 3);
+    renderPodium(ipEntries, 'wLbIP');
+    renderPodium(rmEntries, 'wLbRM');
   }
 
+  // ── Init ───────────────────────────────────────────────
   async function init() {
     buildProgressBar();
     const { data, error } = await db
