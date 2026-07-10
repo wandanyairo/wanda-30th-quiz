@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function NicknameScreen({ onSubmit, onBack, loading, error }) {
+export default function NicknameScreen({ onSubmit, onBack, loading, error, insightsUnlocked }) {
   const [value, setValue] = useState('')
 
   function handleSubmit(e) {
@@ -12,13 +12,15 @@ export default function NicknameScreen({ onSubmit, onBack, loading, error }) {
     <div className="intro">
       <header className="intro-header">
         <span className="welcome-year">WWWT · 2026</span>
-        <h1>Pick a Nickname</h1>
+        <h1>{insightsUnlocked ? 'Enter Your Nickname' : 'Pick a Nickname'}</h1>
         <hr className="intro-divider" />
       </header>
 
       <div className="nickname-body">
         <p className="nickname-desc">
-          Your nickname lets you come back to this link anytime to see your answers and also to see the results once they are revealed. Your nickname also ensures that if you win a prize, it is properly allocated to you! So pick something unique that you will remember.
+          {insightsUnlocked
+            ? 'Make sure you enter your nickname exactly the same. If you forgot your nickname, text me!'
+            : 'Your nickname lets you come back to this link anytime to see your answers and also to see the results once they are revealed. Your nickname also ensures that if you win a prize, it is properly allocated to you! So pick something unique that you will remember.'}
         </p>
         <input
           className="nickname-input"

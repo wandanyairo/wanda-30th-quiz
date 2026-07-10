@@ -1,4 +1,4 @@
-export default function WelcomeScreen({ onNext }) {
+export default function WelcomeScreen({ onNext, insightsUnlocked }) {
   return (
     <div className="welcome">
       <div className="welcome-content">
@@ -6,7 +6,7 @@ export default function WelcomeScreen({ onNext }) {
           <h1>
             Wanda's Worldwide Wine Tours™
             <span className="title-divider"> ~ </span>
-            The Quiz <span className="welcome-year">2026</span>
+            {insightsUnlocked ? 'The Results' : 'The Quiz'} <span className="welcome-year">2026</span>
           </h1>
         </div>
         <p className="welcome-tagline">
