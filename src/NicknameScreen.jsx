@@ -19,7 +19,7 @@ export default function NicknameScreen({ onSubmit, onBack, loading, error, insig
       <div className="nickname-body">
         <p className="nickname-desc">
           {insightsUnlocked
-            ? 'Make sure you enter your nickname exactly the same. If you forgot your nickname, text me!'
+            ? 'Make sure you enter your nickname exactly the same. If you forgot your nickname, text me what you think it is so I can deduce from my list and send it to you!'
             : 'Your nickname lets you come back to this link anytime to see your answers and also to see the results once they are revealed. Your nickname also ensures that if you win a prize, it is properly allocated to you! So pick something unique that you will remember.'}
         </p>
         <input
