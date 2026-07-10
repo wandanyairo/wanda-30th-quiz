@@ -43,7 +43,7 @@ export default function App() {
     const { data, error } = await supabase
       .from('submissions')
       .select('*')
-      .eq('nickname', nick)
+      .ilike('nickname', nick)
       .maybeSingle()
 
     if (error) {
