@@ -10,7 +10,7 @@ export default function OutroScreen({ score = null }) {
           <>
             <h1 className="outro-thankyou">Thanks again for playing!</h1>
             <p className="outro-score">You scored <strong>{score}/{MAX}</strong></p>
-            <p className="outro-odds">May the odds be ever in your favour 🏆</p>
+            <p className="outro-odds">May the odds be ever in your favour for the prizes 🏆</p>
           </>
         ) : (
           <>
