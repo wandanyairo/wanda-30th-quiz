@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WWWT 2026 · Results Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: #FBF2F5;
+      color: #2e1b22;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .header {
+      background: linear-gradient(160deg, #d95c88 0%, #f0a356 100%);
+      padding: 1.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .header-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 0.3rem;
+    }
+
+    .header-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .header-pill {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: rgba(255,255,255,0.22);
+      color: #fff;
+      border-radius: 999px;
+      padding: 0.2em 0.7em;
+      position: relative;
+      top: -1px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.9);
+      font-weight: 700;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      flex-shrink: 0;
+      animation: livePulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { background: #16a34a; transform: scale(1); }
+      50%       { background: #4ade80; transform: scale(1.3); }
+    }
+
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.75rem 1.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .section-label {
+      font-size: 18px;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #956878;
+      margin-bottom: 0.8rem;
+      line-height: 1.2;
+      display: flex;
+      align-items: center;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.875rem;
+    }
+
+    .stat-card {
+      padding: 0.25rem 0.5rem 0.25rem 0;
+    }
+
+    .stat-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #956878;
+      margin-bottom: 0.45rem;
+      line-height: 1.4;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #d95c88;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat-sub {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-top: 0.45rem;
+    }
+    .stat-pill {
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fce8ef 0%, #fef4e8 100%);
+      color: #c24e78;
+      border: 1px solid #e4c4d2;
+      border-radius: 4px;
+      padding: 0.15em 0.5em;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .info-icon {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      cursor: help;
+      font-size: 0.82rem;
+      color: #956878;
+      margin-left: 0.35rem;
+      line-height: 1;
+    }
+    .info-icon::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 1.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #f0a356;
+      color: #fff;
+      padding: 0.3em 0.65em;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-weight: 500;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+      z-index: 10;
+    }
+    .info-icon:hover::after { opacity: 1; }
+
+    .glass-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.78);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 1.5rem;
+      cursor: pointer;
+    }
+    .glass-modal-img {
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #fff;
+      cursor: default;
+    }
+    .glass-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 2.2rem;
+      height: 2.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2e1b22;
+      line-height: 1;
+    }
+    .glass-modal-close:hover { background: #f0dde6; }
+    .glass-link {
+      cursor: zoom-in;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 2px;
+      color: inherit;
+    }
+    .glass-link:hover { color: #d95c88; }
+
+    .leaderboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .lb-card {
+      background: #fff;
+      border: 1.5px solid #e0ccd4;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .lb-card-header {
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid #f0e4ea;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .lb-card-icon { font-size: 1rem; flex-shrink: 0; }
+
+    .lb-card-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #2e1b22;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .chip {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      border-radius: 999px;
+      padding: 0.28em 0.8em;
+    }
+    .chip--inperson { background: #fde8d4; color: #b05818; }
+    .chip--remote   { background: #e3edfb; color: #3664b8; }
+
+    .lb-entry {
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      border-bottom: 1px solid #fdf0f4;
+    }
+    .lb-entry:last-child { border-bottom: none; }
+
+    .lb-medal {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      width: 1.9rem;
+      text-align: center;
+    }
+
+    .lb-info { flex: 1; min-width: 0; }
+
+    .lb-name {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #2e1b22;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lb-pips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2rem;
+      margin-top: 0.3rem;
+    }
+
+    .pip {
+      font-size: 0.58rem;
+      font-weight: 700;
+      background: #fde8ec;
+      color: #c24e78;
+      border-radius: 4px;
+      padding: 0.12em 0.42em;
+    }
+
+    .lb-score {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #d95c88;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .lb-empty {
+      padding: 2.25rem;
+      text-align: center;
+      color: #c0a0aa;
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    .table-card {
+      background: #fff;
+      border: 1.5px solid #e0ccd4;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .table-scroll { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+
+    thead th {
+      text-align: left;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #956878;
+      padding: 0.7rem 1.25rem;
+      background: #fdf8fa;
+      border-bottom: 1px solid #f0e4ea;
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 0.8rem 1.25rem;
+      border-bottom: 1px solid #fdf0f4;
+      vertical-align: top;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: #fdf8fa; }
+
+    .cell-long {
+      line-height: 1.5;
+      color: #2e1b22;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 3rem;
+      color: #c0a0aa;
+      font-style: italic;
+    }
+
+    @media (max-width: 900px) {
+      .stats-row { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 720px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .leaderboard-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .header { padding: 1.25rem; }
+      .main { padding: 1.25rem 1rem 3rem; }
+      .header-title { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div>
+    <div class="header-eyebrow">Wanda's Worldwide Wine Tours™ ~ The Quiz</div>
+    <div class="header-title">
+      Results Dashboard 🍷
+      <span class="header-pill">WWWT · 2026</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="live-dot" id="liveDot"></span>
+    <span id="lastUpdated">Loading…</span>
+  </div>
+</header>
+
+<main class="main">
+
+  <section>
+    <div class="section-label">Overview</div>
+    <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Participants</div>
+          <div class="stat-value" id="statTotal">—</div>
+          <div class="stat-sub" id="statSplit"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cities</div>
+          <div class="stat-value" id="statCities">—</div>
+          <div class="stat-sub" id="statGeographySub"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Average Score</div>
+          <div class="stat-value" id="statAvg">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Top Score</div>
+          <div class="stat-value" id="statTop">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Grape Debate</div>
+          <div class="stat-value" id="statGrapeWinner">—</div>
+          <div class="stat-sub" id="statGrapeSub"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Wine Identities</div>
+          <div class="stat-value" id="statWines">—</div>
+          <div class="stat-sub" id="statWinesSub"></div>
+        </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Leaderboard <span class="info-icon" data-tooltip="Ties broken by earliest submission">ⓘ</span></div>
+    <div class="leaderboard-grid">
+      <div class="lb-card">
+        <div class="lb-card-header">
+          <span class="lb-card-icon">🗽</span>
+          <span class="lb-card-title">Top 3 · <span class="chip chip--inperson">In Person</span></span>
+        </div>
+        <div id="lbInPerson"><div class="lb-empty">Loading…</div></div>
+      </div>
+      <div class="lb-card">
+        <div class="lb-card-header">
+          <span class="lb-card-icon">🌍</span>
+          <span class="lb-card-title">Top 3 · <span class="chip chip--remote">Remote</span></span>
+        </div>
+        <div id="lbRemote"><div class="lb-empty">Loading…</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Wanda's Answers</div>
+    <div class="table-card">
+      <div class="table-scroll" id="answersCard"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">The Scams 🤑</div>
+    <div class="table-card">
+      <div class="table-scroll" id="scamsContainer">
+        <div class="no-data">Loading…</div>
+      </div>
+    </div>
+  </section>
+
+  <div id="glassModal" class="glass-modal-overlay" style="display:none" onclick="closeGlassModal()">
+    <button class="glass-modal-close" onclick="event.stopPropagation();closeGlassModal()" aria-label="Close">✕</button>
+    <img id="glassModalImg" class="glass-modal-img" src="" alt="" onclick="event.stopPropagation()">
+  </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  const { createClient } = supabase;
+  const db = createClient(
+    'https://rtfjpbptykmyrprxbkor.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ0ZmpwYnB0eWtteXJwcnhia29yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3Nzg4NzIsImV4cCI6MjA5ODM1NDg3Mn0.l17KUmut5xJMWWHapRd_sHfSg6KMyUDO8iQGT5Zg-tc'
+  );
+
+  const MEDALS = ['🥇', '🥈', '🥉'];
+
+  const GLASS_LABELS = {
+    'wine-cooler-mug': 'Wine Cooler Mug',
+    'stemless': 'Stemless',
+    'short-thick-stem': 'Short Thick Stem',
+    'angular-stem': 'Angular Stem',
+    'mug': 'Mug',
+    'rounded-stem': 'Rounded Stem'
+  };
+  const WINE_LABELS = {
+    'riesling': 'Riesling',
+    'pinot-noir': 'Pinot Noir',
+    'chilled-malbec': 'Chilled Malbec',
+    'pinot-grigio': 'Pinot Grigio',
+    'rose': 'Rosé'
+  };
+  const CHEESE_LABELS = {
+    'feta': 'Feta',
+    'parmesan': 'Parmesan',
+    'brie': 'Brie',
+    'gruyere': 'Gruyère',
+    'cheddar': 'Cheddar'
+  };
+
+  const BD_LABELS = {
+    'veggie': 'Veggie',
+    'rank-wines': 'Wines',
+    'rank-cheeses': 'Cheeses',
+    'rank-glasses': 'Glasses',
+    'favourite-fruit': 'Fruit'
+  };
+
+  const CORRECT_ANSWERS = {
+    favourite_fruit: 'Apple',
+    veggie: 'Olives',
+    rank_wines:   ['rose', 'riesling', 'pinot-grigio', 'chilled-malbec', 'pinot-noir'],
+    rank_cheeses: ['feta', 'parmesan', 'cheddar', 'brie', 'gruyere'],
+    rank_glasses: ['angular-stem', 'rounded-stem', 'stemless', 'wine-cooler-mug', 'mug', 'short-thick-stem'],
+  };
+
+  let currentData = [];
+
+  function fmtCity(raw) {
+    if (!raw) return '—';
+    raw = raw.trim();
+    if (/^california$/i.test(raw)) return 'San Francisco';
+    const city = raw.split(',')[0].trim();
+    return city.charAt(0).toUpperCase() + city.slice(1);
+  }
+
+  function normalizeCity(raw) {
+    if (!raw) return null;
+    raw = raw.trim();
+    if (/^california$/i.test(raw)) return 'San Francisco';
+    const city = raw.split(',')[0].trim().toLowerCase();
+    return city.charAt(0).toUpperCase() + city.slice(1);
+  }
+
+  function inferCountry(raw) {
+    if (!raw) return null;
+    const c = raw.toLowerCase();
+    if (c.includes('kenya') || c.includes('nairobi')) return 'Kenya';
+    if (c.includes('nigeria') || c.includes('lagos')) return 'Nigeria';
+    if (c.includes('qatar') || c.includes('doha')) return 'Qatar';
+    if (c.includes('canada') || c.includes('toronto')) return 'Canada';
+    return 'USA';
+  }
+
+  function isInPerson(raw) {
+    return /^in\s*person$/i.test((raw || '').trim());
+  }
+
+  function esc(str) {
+    return String(str ?? '')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function fmtRank(arr, labels) {
+    if (!arr || !arr.length) return '<span style="color:#c0a0aa">—</span>';
+    return arr.map((k, i) =>
+      `<div style="display:flex;align-items:baseline;gap:0.3em;font-size:0.8rem;line-height:1.6"><span style="font-size:0.65rem;font-weight:700;color:#d95c88;min-width:1em">${i + 1}</span>${esc(labels[k] || k)}</div>`
+    ).join('');
+  }
+
+  function openGlassModal(src) {
+    document.getElementById('glassModalImg').src = src;
+    document.getElementById('glassModal').style.display = 'flex';
+  }
+  function closeGlassModal() {
+    document.getElementById('glassModal').style.display = 'none';
+    document.getElementById('glassModalImg').src = '';
+  }
+
+  function renderAnswersCard() {
+    const el = document.getElementById('answersCard');
+    if (!el) return;
+    const c = CORRECT_ANSWERS;
+    function fmtRankGlass(arr, labels) {
+      if (!arr || !arr.length) return '<span style="color:#c0a0aa">—</span>';
+      return arr.map((k, i) =>
+        `<div style="display:flex;align-items:baseline;gap:0.3em;font-size:0.8rem;line-height:1.6"><span style="font-size:0.65rem;font-weight:700;color:#d95c88;min-width:1em">${i + 1}</span><span class="glass-link" onclick="openGlassModal('/glasses/${k}.png')">${esc(labels[k] || k)}</span></div>`
+      ).join('');
+    }
+    el.innerHTML = `<table>
+      <thead><tr>
+        <th>Fave Fruit</th>
+        <th>Rank Glasses</th>
+        <th>Rank Wines</th>
+        <th>Rank Cheeses</th>
+        <th>Veggie</th>
+      </tr></thead>
+      <tbody><tr>
+        <td>${esc(c.favourite_fruit || '—')}</td>
+        <td>${fmtRankGlass(c.rank_glasses, GLASS_LABELS)}</td>
+        <td>${fmtRank(c.rank_wines,   WINE_LABELS)}</td>
+        <td>${fmtRank(c.rank_cheeses, CHEESE_LABELS)}</td>
+        <td>${esc(c.veggie || '—')}</td>
+      </tr></tbody>
+    </table>`;
+  }
+
+  function renderLeaderboard(entries, id) {
+    const el = document.getElementById(id);
+    const top = entries.slice(0, 3);
+    if (!top.length) { el.innerHTML = '<div class="lb-empty">No entries yet</div>'; return; }
+    el.innerHTML = top.map((e, i) => {
+      const bd = e.score_breakdown || {};
+      const PIP_ORDER = ['favourite-fruit','rank-glasses','rank-wines','rank-cheeses','veggie'];
+      const pips = PIP_ORDER
+        .filter(k => (bd[k] || 0) > 0)
+        .map(k => `<span class="pip">${BD_LABELS[k]||k} +${bd[k]}</span>`)
+        .join('');
+      return `<div class="lb-entry">
+        <div class="lb-medal">${MEDALS[i]}</div>
+        <div class="lb-info">
+          <div class="lb-name">${esc(e.nickname || 'Anonymous')}</div>
+          <div class="lb-pips">${pips}</div>
+        </div>
+        <div class="lb-score">${e.score ?? '—'}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderStats(data) {
+    const n = data.length;
+    const scores = data.map(r => r.score ?? 0);
+    const avg = n ? (scores.reduce((a,b) => a+b, 0) / n).toFixed(1) : '—';
+    const top = n ? Math.max(...scores) : '—';
+    const ip = data.filter(r => isInPerson(r.attendance)).length;
+    const rm = data.filter(r => /^remote$/i.test((r.attendance || '').trim())).length;
+
+    const red   = data.filter(r => (r.grape_debate || {}).choice === 'Red').length;
+    const green = data.filter(r => (r.grape_debate || {}).choice === 'Green').length;
+
+    const cityNames = data.map(r => normalizeCity(r.city)).filter(Boolean);
+    const uniqueCities = new Set(cityNames).size;
+    const countries = new Set(data.map(r => inferCountry(r.city)).filter(Boolean));
+    const uniqueCountries = countries.size;
+
+    const wines = data
+      .map(r => (r.wine_self || {}).wine)
+      .filter(w => w && !/idk|don't know|sparkling water/i.test(w));
+    const uniqueWines = new Set(wines.map(w => w.toLowerCase())).size;
+    const wineFreq = {};
+    wines.forEach(w => { const k = w.toLowerCase(); wineFreq[k] = (wineFreq[k] || 0) + 1; });
+    const maxFreq = Math.max(...Object.values(wineFreq), 0);
+    const topWines = Object.entries(wineFreq)
+      .filter(([,v]) => v === maxFreq)
+      .map(([k]) => wines.find(w => w.toLowerCase() === k) || k);
+
+    function pill(t) { return `<span class="stat-pill">${esc(String(t))}</span>`; }
+    function titleCase(s) { return s.replace(/\b\w/g, c => c.toUpperCase()); }
+
+    document.getElementById('statTotal').textContent = n;
+    document.getElementById('statAvg').innerHTML = avg + '<span style="font-size:0.5em;font-weight:700;opacity:0.55;margin-left:0.15em">/18</span>';
+    document.getElementById('statTop').innerHTML = top + '<span style="font-size:0.5em;font-weight:700;opacity:0.55;margin-left:0.15em">/18</span>';
+    document.getElementById('statSplit').innerHTML = pill(`${ip} in person`) + pill(`${rm} remote`);
+    const grapeWinnerLabel = red > green ? 'Red' : green > red ? 'Green' : 'Tied';
+    document.getElementById('statGrapeWinner').textContent = grapeWinnerLabel;
+    document.getElementById('statGrapeSub').innerHTML = pill(`${red} Red`) + pill(`${green} Green`);
+
+    const cityFreq = {};
+    cityNames.forEach(c => { cityFreq[c] = (cityFreq[c] || 0) + 1; });
+    const maxCityFreq = cityNames.length ? Math.max(...Object.values(cityFreq)) : 0;
+    const topCity = maxCityFreq ? Object.entries(cityFreq).find(([,v]) => v === maxCityFreq)?.[0] : null;
+    document.getElementById('statCities').textContent = uniqueCities;
+    document.getElementById('statGeographySub').innerHTML =
+      pill(`${uniqueCountries} countr${uniqueCountries === 1 ? 'y' : 'ies'}`) +
+      (topCity ? pill(`★ ${titleCase(topCity)}`) : '');
+
+    document.getElementById('statWines').textContent = uniqueWines;
+    const wineSubEl = document.getElementById('statWinesSub');
+    if (topWines.length >= 1) {
+      wineSubEl.innerHTML = topWines.map(w => pill(`★ ${w}`)).join('');
+    }
+  }
+
+  function renderScams(data) {
+    const el = document.getElementById('scamsContainer');
+    const scams = data.map(r => r.scamfluencer).filter(s => s && s.trim().length > 0);
+    if (!scams.length) { el.innerHTML = '<div class="no-data">No responses yet</div>'; return; }
+    const rows = scams.map(s => `<tr><td class="cell-long">${esc(s.trim())}</td></tr>`).join('');
+    el.innerHTML = `<table>
+      <thead><tr><th>The scam they'd run</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  }
+
+  async function refresh() {
+    const { data, error } = await db
+      .from('submissions')
+      .select('*')
+      .order('score', { ascending: false })
+      .order('submitted_at', { ascending: true });
+
+    if (error) {
+      document.getElementById('lastUpdated').textContent = 'Error — retrying…';
+      return;
+    }
+
+    currentData = data.filter(r => !/^test\s*4$/i.test((r.nickname || '').trim()));
+
+    const inPerson = currentData.filter(r => isInPerson(r.attendance));
+    const remote   = currentData.filter(r => /^remote$/i.test((r.attendance || '').trim()));
+
+    renderStats(currentData);
+    renderLeaderboard(inPerson, 'lbInPerson');
+    renderLeaderboard(remote,   'lbRemote');
+    renderScams(currentData);
+
+    const now = new Date();
+    document.getElementById('lastUpdated').textContent =
+      'Updated ' + now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      + ' · ' + now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }).replace(' AM', 'AM').replace(' PM', 'PM');
+  }
+
+  renderAnswersCard();
+  refresh();
+  setInterval(refresh, 30000);
+</script>
+</body>
+</html>
