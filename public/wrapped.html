@@ -785,7 +785,8 @@
       .select('*')
       .order('submitted_at', { ascending: true });
     if (!error && data) {
-      const filtered = data.filter(r => !/^test\s*4$/i.test((r.nickname||'').trim()));
+      const excluded = /^(test\s*4|venividivici)$/i;
+      const filtered = data.filter(r => !excluded.test((r.nickname||'').trim()));
       populate(filtered);
     }
     const ls = document.getElementById('loadingScreen');
