@@ -118,7 +118,7 @@ export default function App() {
   }
 
   const now = new Date()
-  const quizOpen = now >= new Date('2026-11-06T14:30:00Z') && now < new Date('2026-11-06T14:50:00Z')
+  const quizOpen = now >= new Date('2026-11-06T14:30:00Z') && now < new Date('2026-11-06T19:30:00Z')
   const insightsUnlocked = now >= new Date('2026-11-06T20:00:00Z')
   if (screen === 'welcome') return <WelcomeScreen onNext={() => { if (insightsUnlocked) setScreen('nickname'); else if (quizOpen) setScreen('intro'); }} insightsUnlocked={insightsUnlocked} quizOpen={quizOpen} />
   if (screen === 'intro') return <IntroScreen onStart={() => setScreen('nickname')} onBack={() => setScreen('welcome')} />

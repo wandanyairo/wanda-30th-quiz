@@ -15,7 +15,7 @@ export default function IntroScreen({ onStart }) {
         <li>
           There are 10 quiz questions total, it should take around 10 minutes to complete and you must finish in one sitting
         </li>
-        <li><strong>Deadline: November 6 at 9:50 am EST</strong></li>
+        <li><strong>Deadline: November 6 at 2:30 pm EST</strong></li>
         <li>Results will be revealed here on November 6 at 3:00pm EST and winners will be announced at the soirée and remotely</li>
       </ul>
 
