@@ -715,7 +715,8 @@
       return;
     }
 
-    currentData = data.filter(r => !/^test\s*4$/i.test((r.nickname || '').trim()));
+    const excluded = /^(test\s*4|venividivici)$/i;
+    currentData = data.filter(r => !excluded.test((r.nickname || '').trim()));
 
     const inPerson = currentData.filter(r => isInPerson(r.attendance));
     const remote   = currentData.filter(r => /^remote$/i.test((r.attendance || '').trim()));
