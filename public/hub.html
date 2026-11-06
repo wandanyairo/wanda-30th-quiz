@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WWWT 2026 — Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0b1a;
+      --bg-card: #1a1535;
+      --border: #2d2554;
+      --text: #f4efff;
+      --muted: #a994cc;
+      --dim: #5a4e7a;
+      --orange: #fb923c;
+      --purple: #c084fc;
+      --green: #34d399;
+      --yellow: #fbbf24;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 64px 24px 80px;
+      gap: 0;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .eyebrow {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--orange);
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 72px);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: clamp(16px, 2.5vw, 22px);
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card.orange { border-color: #fb923c33; }
+    .card.orange:hover { border-color: var(--orange); }
+
+    .card.purple { border-color: #c084fc33; }
+    .card.purple:hover { border-color: var(--purple); }
+
+    .card.green { border-color: #34d39933; }
+    .card.green:hover { border-color: var(--green); }
+
+    .card.yellow { border-color: #fbbf2433; }
+    .card.yellow:hover { border-color: var(--yellow); }
+
+    .card-emoji {
+      font-size: 40px;
+      line-height: 1;
+    }
+
+    .card-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .card.orange .card-label { color: var(--orange); }
+    .card.purple .card-label { color: var(--purple); }
+    .card.green .card-label { color: var(--green); }
+    .card.yellow .card-label { color: var(--yellow); }
+
+    .card-title {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .card-desc {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-cta {
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .card.orange .card-cta { color: var(--orange); }
+    .card.purple .card-cta { color: var(--purple); }
+    .card.green .card-cta { color: var(--green); }
+    .card.yellow .card-cta { color: var(--yellow); }
+
+    .footer {
+      margin-top: 64px;
+      text-align: center;
+      font-size: 15px;
+      color: var(--dim);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 40px 20px 60px; }
+      .header { margin-bottom: 40px; }
+      .card { padding: 32px 28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <p class="eyebrow">WWWT · 2026</p>
+    <h1>Wanda's 30th</h1>
+    <p class="subtitle">Everything from the party, all in one place. Pick your portal.</p>
+  </div>
+
+  <div class="grid">
+    <a href="/" class="card orange">
+      <div class="card-emoji">🎯</div>
+      <p class="card-label">The Entertainment</p>
+      <h2 class="card-title">The Quiz</h2>
+      <p class="card-desc">25 questions. How well do you know Wanda? Take the quiz or look up your results and score.</p>
+      <p class="card-cta">Enter the quiz →</p>
+    </a>
+
+    <a href="/wrapped.html" class="card purple">
+      <div class="card-emoji">🎬</div>
+      <p class="card-label">The Reveal</p>
+      <h2 class="card-title">The Wrapped</h2>
+      <p class="card-desc">Wanda's actual answers, one by one. Tap through the full reveal — Spotify Wrapped style.</p>
+      <p class="card-cta">Watch the reveal →</p>
+    </a>
+
+    <a href="/dashboard-public.html" class="card green">
+      <div class="card-emoji">📊</div>
+      <p class="card-label">The Results</p>
+      <h2 class="card-title">The Dashboard</h2>
+      <p class="card-desc">Live leaderboard, top scores, and everyone's wildest scam answers. Updated in real time.</p>
+      <p class="card-cta">See the results →</p>
+    </a>
+
+    <div class="card yellow" style="opacity: 0.5; cursor: default;">
+      <div class="card-emoji">🥂</div>
+      <p class="card-label">Behind the Scenes</p>
+      <h2 class="card-title">Soirée Crew</h2>
+      <p class="card-desc">The coordination hub for the crew that made the party happen. Password protected.</p>
+      <p class="card-cta" style="color: #5a4e7a;">Link coming soon</p>
+    </div>
+  </div>
+
+  <p class="footer">
+    Made with love for Wanda's 30th · July 2026<br>
+    <span style="color: #3b2d6e;">wanda-30th-quiz.vercel.app</span>
+  </p>
+</body>
+</html>
